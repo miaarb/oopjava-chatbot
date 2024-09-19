@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cli/cli.iml" filepath="$PROJECT_DIR$/cli/cli.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/concepts/command/command.iml" filepath="$PROJECT_DIR$/app/concepts/command/command.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/concepts/concepts.iml" filepath="$PROJECT_DIR$/app/concepts/concepts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/concepts/dialogue/dialogue.iml" filepath="$PROJECT_DIR$/app/concepts/dialogue/dialogue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/concepts/dialogue_manager/dialogue_manager.iml" filepath="$PROJECT_DIR$/app/concepts/dialogue_manager/dialogue_manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/oopjava-chatbot.iml" filepath="$PROJECT_DIR$/.idea/oopjava-chatbot.iml" />
+    </modules>
+  </component>
+</project>
