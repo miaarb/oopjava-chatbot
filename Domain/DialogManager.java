@@ -16,14 +16,14 @@ public class DialogManager {
                         Для начала работы начните добавлять карточки в формате вопрос-ответ. Потом можно будет их просматривать и повторять
                         команды:
                         /help -- справка
-                        /add (вопрос) (ответ) -- добавить карточку вопрос-ответ
+                        /add -- добавить карточку вопрос-ответ
                         /read -- получить случайную карточку
                         /show -- показать ответ
                         """;
 
             case CommandType.AddCard:
                 creatingCard = new Card(null, null);
-                return "Введите вопрос:";
+                return "Введите вопрос: ";
 
             case CommandType.ReadCards:
                 currentCard = cardStorage.getRandom();
@@ -41,10 +41,14 @@ public class DialogManager {
                 if(creatingCard == null)
                     return "Неизвестный ввод";
 
-                if(creatingCard.question() == null)
+                if(creatingCard.question() == null) {
                     creatingCard = new Card(command.message(), null);
+                    return "Введите ответ: ";
+                }
                 else {
                     creatingCard = new Card(creatingCard.question(), command.message());
+                    cardStorage.add(creatingCard);
+                    creatingCard = null;
                     return "Карта добавлена";
                 }
 
