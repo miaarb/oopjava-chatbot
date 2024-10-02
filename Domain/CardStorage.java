@@ -1,8 +1,6 @@
 package Domain;
 
-public interface ICardStorage {
-    Card[] getAll();
-
+public interface CardStorage {
     Card getRandom();
 
     void add(Card card);
