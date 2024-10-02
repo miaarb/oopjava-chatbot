@@ -5,30 +5,49 @@ public class DialogManager {
     private final CardStorage cardStorage = new InMemoryCardStorage();
 
     private Card currentCard;
+    private Card creatingCard;
 
-    public String handleCommand(String command, String[] args) {
-        switch (command){
-            case "/help":
+
+    public String handleCommand(Command command) {
+        switch (command.type()){
+            case CommandType.ShowHelp:
                 return """
                         Этот бот поможет вам запомнить любую информацию и не забывать её в будущем.
                         Для начала работы начните добавлять карточки в формате вопрос-ответ. Потом можно будет их просматривать и повторять
+                        команды:
+                        /help -- справка
+                        /add (вопрос) (ответ) -- добавить карточку вопрос-ответ
+                        /read -- получить случайную карточку
+                        /show -- показать ответ
                         """;
 
-            case "/add":
-                cardStorage.add(new Card(args[0], args[1]));
-                return "Карта добавлена";
+            case CommandType.AddCard:
+                creatingCard = new Card(null, null);
+                return "Введите вопрос:";
 
-            case "/read":
+            case CommandType.ReadCards:
                 currentCard = cardStorage.getRandom();
                 return currentCard.question();
 
-            case "/show":
+            case CommandType.ShowAnswer:
                 if(currentCard == null)
                     return "Сперва откройте карту";
 
                 var answer = currentCard.answer();
                 currentCard = null;
                 return answer;
+
+            case CommandType.TextMessage:
+                if(creatingCard == null)
+                    return "Неизвестный ввод";
+
+                if(creatingCard.question() == null)
+                    creatingCard = new Card(command.message(), null);
+                else {
+                    creatingCard = new Card(creatingCard.question(), command.message());
+                    return "Карта добавлена";
+                }
+
 
             default:
                 return "Неизвестная команда";
