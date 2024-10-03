@@ -15,6 +15,10 @@ public class DialogManager {
 
 
     public String handleCommand(Command command) {
+        if(creatingCard != null && command.type() != CommandType.TextMessage) {
+            creatingCard = null;
+        }
+
         switch (command.type()){
             case CommandType.ShowHelp:
                 return """
