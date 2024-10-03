@@ -1,4 +1,10 @@
-package Domain;
+package Dialog;
+
+import Domain.Card.Card;
+import Domain.Command.Command;
+import Domain.Command.CommandType;
+import Storage.CardStorage;
+import Storage.InMemoryCardStorage;
 
 public class DialogManager {
 
@@ -27,6 +33,10 @@ public class DialogManager {
 
             case CommandType.ReadCards:
                 currentCard = cardStorage.getRandom();
+
+                if(currentCard == null)
+                    return "Сперва добавьте карту";
+
                 return currentCard.question();
 
             case CommandType.ShowAnswer:
@@ -51,7 +61,6 @@ public class DialogManager {
                     creatingCard = null;
                     return "Карта добавлена";
                 }
-
 
             default:
                 return "Неизвестная команда";

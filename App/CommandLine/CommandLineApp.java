@@ -1,8 +1,8 @@
 package App.CommandLine;
 
-import Domain.DialogManager;
-import Domain.CommandType;
-import Domain.Command;
+import Dialog.DialogManager;
+import Domain.Command.CommandType;
+import Domain.Command.Command;
 
 
 public class CommandLineApp {

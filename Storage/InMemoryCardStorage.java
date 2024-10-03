@@ -1,4 +1,6 @@
-package Domain;
+package Storage;
+
+import Domain.Card.Card;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,6 +11,9 @@ public class InMemoryCardStorage implements CardStorage {
 
     @Override
     public Card getRandom() {
+        if(cards.isEmpty())
+            return null;
+
         return cards.get(random.nextInt(cards.size()));
     }
 

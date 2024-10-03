@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Command;
 
 public enum CommandType {
     AddCard,
