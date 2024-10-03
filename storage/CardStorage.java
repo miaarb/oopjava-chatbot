@@ -1,6 +1,6 @@
-package Storage;
+package storage;
 
-import Domain.Card.Card;
+import domain.card.Card;
 
 public interface CardStorage {
     Card getRandom();

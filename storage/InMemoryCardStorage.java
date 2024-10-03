@@ -1,13 +1,22 @@
-package Storage;
+package storage;
 
-import Domain.Card.Card;
+import domain.card.Card;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class InMemoryCardStorage implements CardStorage {
-    private final ArrayList<Card> cards = new ArrayList<>();
-    private final Random random = new Random();
+    private final List<Card> cards = new ArrayList<>();
+    private final Random random;
+
+    public InMemoryCardStorage(Random random) {
+        this.random = random;
+    }
+
+    public InMemoryCardStorage() {
+        this(new Random());
+    }
 
     @Override
     public Card getRandom() {

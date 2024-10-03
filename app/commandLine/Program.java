@@ -1,4 +1,4 @@
-package App.CommandLine;
+package app.commandLine;
 
 public class Program {
     public static void main(String[] args) {
