@@ -1,12 +1,9 @@
-package tests.dialog;
+package dialog;
 
-import dialog.DialogManager;
 import domain.command.Command;
 import domain.command.CommandType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-
 
 public class DialogManagerTests {
 
@@ -79,6 +76,14 @@ public class DialogManagerTests {
     }
 
     @Test
+    public void handleCommandsShouldHandleShowAnswerWhenNoCard() {
+        var manager = new DialogManager();
+
+        var showResult = manager.handleCommand(new Command(CommandType.SHOW_ANSWER, null));
+        Assertions.assertTrue(showResult.message().contains("откройте карту"));
+    }
+
+    @Test
     public void handleCommandsShouldHandleOtherCommandWhenAddCard() {
         var manager = new DialogManager();
 
@@ -95,12 +100,8 @@ public class DialogManagerTests {
     public void handleCommandsShouldHandleUnknownCommand() {
         var manager = new DialogManager();
 
-        manager.handleCommand(new Command(CommandType.ADD_CARD, null));
-        manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "question"));
-        manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "answer"));
-        manager.handleCommand(new Command(CommandType.READ_CARD, null));
+        var result = manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "/strange command"));
 
-        var showResult = manager.handleCommand(new Command(CommandType.SHOW_ANSWER, null));
-        Assertions.assertEquals("answer", showResult.message());
+        Assertions.assertEquals("Неизвестная команда", result.message());
     }
 }

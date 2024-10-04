@@ -52,7 +52,7 @@ public class DialogManager {
 
             case CommandType.TEXT_MESSAGE:
                 if(creatingCard == null)
-                    return new ExecutionResult("Неизвестный ввод");
+                    return new ExecutionResult("Неизвестная команда");
 
                 if(creatingCard.question() == null) {
                     creatingCard = new Card(command.message(), null);
