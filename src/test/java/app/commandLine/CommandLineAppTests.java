@@ -8,9 +8,9 @@ import domain.command.CommandType;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import static org.mockito.Mockito.*;
 
@@ -29,12 +29,12 @@ class CommandLineAppTests {
         var manager = mock(DialogManager.class);
         when(manager.handleCommand(Mockito.any())).thenReturn(new ExecutionResult("success"));
 
-        var console = mock(Console.class);
+        var scanner = mock(Scanner.class);
 
-        var app = new CommandLineApp(manager, console);
+        var app = new CommandLineApp(manager, scanner);
 
         COMMANDS_MAP.forEach((input, command) -> {
-            when(console.readLine()).thenReturn(input);
+            when(scanner.nextLine()).thenReturn(input);
             app.handleInput();
             verify(manager).handleCommand(command);
         });
