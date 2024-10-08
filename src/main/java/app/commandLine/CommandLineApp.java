@@ -7,6 +7,7 @@ import domain.command.Command;
 import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 
 public class CommandLineApp {
@@ -17,15 +18,15 @@ public class CommandLineApp {
             "/show", new Command(CommandType.SHOW_ANSWER, null)
     ));
     private final DialogManager dialogManager;
-    private final Console console;
+    private final Scanner scanner;
 
-    public CommandLineApp(DialogManager dialogManager, Console console) {
+    public CommandLineApp(DialogManager dialogManager, Scanner scanner) {
         this.dialogManager = dialogManager;
-        this.console = console;
+        this.scanner = scanner;
     }
 
     public CommandLineApp() {
-        this(new DialogManager(), System.console());
+        this(new DialogManager(), new Scanner(System.in));
     }
 
     public void run() {
@@ -37,7 +38,7 @@ public class CommandLineApp {
     }
 
     public void handleInput() {
-        String input = console.readLine();
+        String input = scanner.nextLine();
 
         var command = COMMANDS_MAP.getOrDefault(input, new Command(CommandType.TEXT_MESSAGE, input));
 
