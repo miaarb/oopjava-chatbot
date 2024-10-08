@@ -1,23 +1,19 @@
 package dialog;
 
-import domain.card.Card;
 import domain.command.Command;
 import domain.command.CommandType;
-import storage.CardStorage;
-import storage.InMemoryCardStorage;
+import domain.user.User;
 
 public class DialogManager {
+    private UserDialog currentUserDialog;
 
-    private final CardStorage cardStorage = new InMemoryCardStorage();
-
-    private Card currentCard;
-    private Card creatingCard;
-
+    public DialogManager() {
+        var user = new User();
+        this.currentUserDialog = new UserDialog(user);
+    }
 
     public ExecutionResult handleCommand(Command command) {
-        if(creatingCard != null && command.type() != CommandType.TEXT_MESSAGE) {
-            creatingCard = null;
-        }
+        currentUserDialog.ResetCreatingCardIfNecessary(command);
 
         switch (command.type()){
             case CommandType.SHOW_HELP:
@@ -29,44 +25,8 @@ public class DialogManager {
                         /add -- добавить карточку вопрос-ответ
                         /read -- получить случайную карточку
                         /show -- показать ответ""");
-
-            case CommandType.ADD_CARD:
-                creatingCard = new Card(null, null);
-                return new ExecutionResult("Введите вопрос: ");
-
-            case CommandType.READ_CARD:
-                currentCard = cardStorage.getRandom();
-
-                if(currentCard == null)
-                    return new ExecutionResult("Сперва добавьте карту");
-
-                return new ExecutionResult(currentCard.question());
-
-            case CommandType.SHOW_ANSWER:
-                if(currentCard == null)
-                    return new ExecutionResult("Сперва откройте карту");
-
-                var answer = currentCard.answer();
-                currentCard = null;
-                return new ExecutionResult(answer);
-
-            case CommandType.TEXT_MESSAGE:
-                if(creatingCard == null)
-                    return new ExecutionResult("Неизвестная команда");
-
-                if(creatingCard.question() == null) {
-                    creatingCard = new Card(command.message(), null);
-                    return new ExecutionResult("Введите ответ: ");
-                }
-                else {
-                    creatingCard = new Card(creatingCard.question(), command.message());
-                    cardStorage.add(creatingCard);
-                    creatingCard = null;
-                    return new ExecutionResult("Карта добавлена");
-                }
-
             default:
-                return new ExecutionResult("Неизвестная команда");
+                return currentUserDialog.handleCommand(command);
         }
     }
 }
