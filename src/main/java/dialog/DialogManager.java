@@ -13,7 +13,7 @@ public class DialogManager {
     }
 
     public ExecutionResult handleCommand(Command command) {
-        currentUserDialog.ResetCreatingCardIfNecessary(command);
+        currentUserDialog.resetCreatingCardIfNecessary(command);
 
         switch (command.type()){
             case CommandType.SHOW_HELP:

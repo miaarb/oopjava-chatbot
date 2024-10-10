@@ -21,7 +21,7 @@ public class UserDialog {
                 return new ExecutionResult("Введите вопрос: ");
 
             case CommandType.READ_CARD:
-                currentCard = user.CardStorage.getRandom();
+                currentCard = user.cardStorage.getRandom();
 
                 if(currentCard == null)
                     return new ExecutionResult("Сперва добавьте карту");
@@ -46,7 +46,7 @@ public class UserDialog {
                 }
                 else {
                     creatingCard = new Card(creatingCard.question(), command.message());
-                    user.CardStorage.add(creatingCard);
+                    user.cardStorage.add(creatingCard);
                     creatingCard = null;
                     return new ExecutionResult("Карта добавлена");
                 }
@@ -56,7 +56,7 @@ public class UserDialog {
         }
     }
 
-    public void ResetCreatingCardIfNecessary(Command command) {
+    public void resetCreatingCardIfNecessary(Command command) {
         if(creatingCard != null && command.type() != CommandType.TEXT_MESSAGE) {
             creatingCard = null;
         }
