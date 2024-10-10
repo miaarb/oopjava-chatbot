@@ -9,9 +9,12 @@ public class UserDialog {
     private final User user;
     private Card currentCard;
     private Card creatingCard;
+    private State state;
 
     public UserDialog(User user) {
+
         this.user = user;
+//        state =
     }
 
     public ExecutionResult handleCommand(Command command) {
