@@ -1,4 +1,13 @@
 package domain.command;
 
-public record Command(CommandType type, String message) {
+//public interface ICommand {
+//    stateFrom
+//    stateTo
+//}
+
+import dialog.CommandExecutionResult;
+import dialog.State;
+
+public interface Command {
+    CommandExecutionResult execute(State state);
 }
