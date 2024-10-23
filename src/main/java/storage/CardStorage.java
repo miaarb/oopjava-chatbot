@@ -2,8 +2,10 @@ package storage;
 
 import domain.card.Card;
 
-public interface CardStorage {
-    Card getRandom();
+import java.util.UUID;
 
-    void add(Card card);
+public interface CardStorage {
+    Card getRandom(UUID userId);
+
+    void add(UUID userId, Card card);
 }

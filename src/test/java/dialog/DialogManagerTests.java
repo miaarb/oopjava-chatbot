@@ -1,7 +1,6 @@
 package dialog;
 
-import domain.command.Command;
-import domain.command.CommandType;
+import domain.commands.ExecutableCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,14 +9,14 @@ public class DialogManagerTests {
     @Test
     public void handleCommandShouldHandleHelp() {
         var manager = new DialogManager();
-        var result = manager.handleCommand(new Command(CommandType.SHOW_HELP, null));
+        var result = manager.handleCommand(new ExecutableCommand(CommandType.SHOW_HELP, null));
         Assertions.assertTrue(result.message().contains("команды"));
     }
 
     @Test
     public void handleCommandsShouldHandleAddCard() {
         var manager = new DialogManager();
-        var result = manager.handleCommand(new Command(CommandType.ADD_CARD, null));
+        var result = manager.handleCommand(new ExecutableCommand(CommandType.ADD_CARD, null));
         Assertions.assertTrue(result.message().contains("Введите вопрос"));
     }
 
@@ -25,9 +24,9 @@ public class DialogManagerTests {
     public void handleCommandsShouldHandleAddCardQuestion() {
         var manager = new DialogManager();
 
-        manager.handleCommand(new Command(CommandType.ADD_CARD, null));
+        manager.handleCommand(new ExecutableCommand(CommandType.ADD_CARD, null));
 
-        var questionResult = manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "question"));
+        var questionResult = manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "question"));
         Assertions.assertTrue(questionResult.message().contains("Введите ответ"));
     }
 
@@ -35,10 +34,10 @@ public class DialogManagerTests {
     public void handleCommandsShouldHandleAddCardAnswer() {
         var manager = new DialogManager();
 
-        manager.handleCommand(new Command(CommandType.ADD_CARD, null));
-        manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "question"));
+        manager.handleCommand(new ExecutableCommand(CommandType.ADD_CARD, null));
+        manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "question"));
 
-        var answerResult = manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "answer"));
+        var answerResult = manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "answer"));
         Assertions.assertTrue(answerResult.message().contains("Карта добавлена"));
     }
 
@@ -46,11 +45,11 @@ public class DialogManagerTests {
     public void handleCommandsShouldHandleReadCard() {
         var manager = new DialogManager();
 
-        manager.handleCommand(new Command(CommandType.ADD_CARD, null));
-        manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "question"));
-        manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "answer"));
+        manager.handleCommand(new ExecutableCommand(CommandType.ADD_CARD, null));
+        manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "question"));
+        manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "answer"));
 
-        var readResult = manager.handleCommand(new Command(CommandType.READ_CARD, null));
+        var readResult = manager.handleCommand(new ExecutableCommand(CommandType.READ_CARD, null));
         Assertions.assertEquals("question", readResult.message());
     }
 
@@ -58,7 +57,7 @@ public class DialogManagerTests {
     public void handleCommandsShouldHandleReadCardWhenNoCards() {
         var manager = new DialogManager();
 
-        var readResult = manager.handleCommand(new Command(CommandType.READ_CARD, null));
+        var readResult = manager.handleCommand(new ExecutableCommand(CommandType.READ_CARD, null));
         Assertions.assertTrue(readResult.message().contains("добавьте карту"));
     }
 
@@ -66,12 +65,12 @@ public class DialogManagerTests {
     public void handleCommandsShouldHandleShowAnswer() {
         var manager = new DialogManager();
 
-        manager.handleCommand(new Command(CommandType.ADD_CARD, null));
-        manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "question"));
-        manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "answer"));
-        manager.handleCommand(new Command(CommandType.READ_CARD, null));
+        manager.handleCommand(new ExecutableCommand(CommandType.ADD_CARD, null));
+        manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "question"));
+        manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "answer"));
+        manager.handleCommand(new ExecutableCommand(CommandType.READ_CARD, null));
 
-        var showResult = manager.handleCommand(new Command(CommandType.SHOW_ANSWER, null));
+        var showResult = manager.handleCommand(new ExecutableCommand(CommandType.SHOW_ANSWER, null));
         Assertions.assertEquals("answer", showResult.message());
     }
 
@@ -79,7 +78,7 @@ public class DialogManagerTests {
     public void handleCommandsShouldHandleShowAnswerWhenNoCard() {
         var manager = new DialogManager();
 
-        var showResult = manager.handleCommand(new Command(CommandType.SHOW_ANSWER, null));
+        var showResult = manager.handleCommand(new ExecutableCommand(CommandType.SHOW_ANSWER, null));
         Assertions.assertTrue(showResult.message().contains("откройте карту"));
     }
 
@@ -87,12 +86,12 @@ public class DialogManagerTests {
     public void handleCommandsShouldHandleOtherCommandWhenAddCard() {
         var manager = new DialogManager();
 
-        manager.handleCommand(new Command(CommandType.ADD_CARD, null));
-        manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "question"));
-        manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "answer"));
-        manager.handleCommand(new Command(CommandType.READ_CARD, null));
+        manager.handleCommand(new ExecutableCommand(CommandType.ADD_CARD, null));
+        manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "question"));
+        manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "answer"));
+        manager.handleCommand(new ExecutableCommand(CommandType.READ_CARD, null));
 
-        var showResult = manager.handleCommand(new Command(CommandType.SHOW_ANSWER, null));
+        var showResult = manager.handleCommand(new ExecutableCommand(CommandType.SHOW_ANSWER, null));
         Assertions.assertEquals("answer", showResult.message());
     }
 
@@ -100,7 +99,7 @@ public class DialogManagerTests {
     public void handleCommandsShouldHandleUnknownCommand() {
         var manager = new DialogManager();
 
-        var result = manager.handleCommand(new Command(CommandType.TEXT_MESSAGE, "/strange command"));
+        var result = manager.handleCommand(new ExecutableCommand(CommandType.TEXT_MESSAGE, "/strange command"));
 
         Assertions.assertEquals("Неизвестная команда", result.message());
     }

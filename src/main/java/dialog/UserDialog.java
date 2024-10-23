@@ -1,64 +1,58 @@
 package dialog;
 
-import domain.card.Card;
-import domain.command.Command;
-import domain.command.CommandType;
-import domain.user.User;
+import dialog.commandExecutors.CommandExecutorType;
+import dialog.commandExecutors.abstractions.CommandExecutor;
+import dialog.commandExecutors.abstractions.CommandExecutorBase;
+import dialog.commandExecutors.abstractions.HandleTextCommandExecutor;
+import dialog.commandExecutors.addCard.AnswerInputCommandExecutor;
+import dialog.commandExecutors.addCard.CreateCardExecutor;
+import dialog.commandExecutors.addCard.QuestionInputCommandExecutor;
+import dialog.commandExecutors.showHelp.HelpCommandExecutor;
+import dialog.commands.TextInputCommand;
+import dialog.commands.abstractions.Command;
+import dialog.state.DialogState;
+import dialog.state.DialogStep;
+import dialog.user.User;
+import storage.InMemoryCardStorage;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserDialog {
-    private final User user;
-    private Card currentCard;
-    private Card creatingCard;
+    private static final Map<CommandExecutorType, CommandExecutorBase> commandExecutors = new HashMap<>(Map.of(
+            CommandExecutorType.AddCard, new CreateCardExecutor(),
+            CommandExecutorType.QuestionInput, new QuestionInputCommandExecutor(),
+            CommandExecutorType.AnswerInput, new AnswerInputCommandExecutor(new InMemoryCardStorage()),
+            CommandExecutorType.ShowHelp, new HelpCommandExecutor()
+    ));
+    private DialogState state;
 
     public UserDialog(User user) {
-        this.user = user;
+        this.state = new DialogState(user)
+                .With(DialogStep.Menu);
     }
 
-    public ExecutionResult handleCommand(Command command) {
-        switch (command.type()){
-            case CommandType.ADD_CARD:
-                creatingCard = new Card(null, null);
-                return new ExecutionResult("Введите вопрос: ");
+    public DialogResponse handleCommand(Command command) {
 
-            case CommandType.READ_CARD:
-                currentCard = user.cardStorage.getRandom();
+        if (command instanceof TextInputCommand textInputCommand) {
+            if (this.state.handleInputCommand == null)
+                return new DialogResponse("Неизвестная команда");
 
-                if(currentCard == null)
-                    return new ExecutionResult("Сперва добавьте карту");
+            var executor = commandExecutors.get(this.state.handleInputCommand.getExecutorType());
 
-                return new ExecutionResult(currentCard.question());
-
-            case CommandType.SHOW_ANSWER:
-                if(currentCard == null)
-                    return new ExecutionResult("Сперва откройте карту");
-
-                var answer = currentCard.answer();
-                currentCard = null;
-                return new ExecutionResult(answer);
-
-            case CommandType.TEXT_MESSAGE:
-                if(creatingCard == null)
-                    return new ExecutionResult("Неизвестная команда");
-
-                if(creatingCard.question() == null) {
-                    creatingCard = new Card(command.message(), null);
-                    return new ExecutionResult("Введите ответ: ");
-                }
-                else {
-                    creatingCard = new Card(creatingCard.question(), command.message());
-                    user.cardStorage.add(creatingCard);
-                    creatingCard = null;
-                    return new ExecutionResult("Карта добавлена");
-                }
-
-            default:
-                return new ExecutionResult("Неизвестная команда");
+            var result = ((HandleTextCommandExecutor) executor).execute(this.state, textInputCommand.text);
+            this.state = result.nextState();
+            return new DialogResponse(result.message());
         }
-    }
 
-    public void resetCreatingCardIfNecessary(Command command) {
-        if(creatingCard != null && command.type() != CommandType.TEXT_MESSAGE) {
-            creatingCard = null;
+        if (command.getSourceState() != this.state.currentStep) {
+            return new DialogResponse("Сейчас нельзя выполнить эту команду");
         }
+
+        var executor = commandExecutors.get(command.getExecutorType());
+
+        var result = ((CommandExecutor) executor).execute(this.state);
+        this.state = result.nextState();
+        return new DialogResponse(result.message());
     }
 }

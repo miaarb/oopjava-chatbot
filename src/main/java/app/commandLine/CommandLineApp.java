@@ -1,32 +1,33 @@
 package app.commandLine;
 
-import dialog.DialogManager;
-import domain.command.CommandType;
-import domain.command.Command;
+import dialog.UserDialog;
+import dialog.commands.CreateCardCommand;
+import dialog.commands.HelpCommand;
+import dialog.commands.TextInputCommand;
+import dialog.commands.abstractions.Command;
+import dialog.user.User;
 
-import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 
 
 public class CommandLineApp {
     private static final Map<String, Command> COMMANDS_MAP = new HashMap<>(Map.of(
-            "/add", new Command(CommandType.ADD_CARD, null),
-            "/help", new Command(CommandType.SHOW_HELP, null),
-            "/read", new Command(CommandType.READ_CARD, null),
-            "/show", new Command(CommandType.SHOW_ANSWER, null)
+            "/add", new CreateCardCommand(),
+            "/help", new HelpCommand()
     ));
-    private final DialogManager dialogManager;
+    private final UserDialog userDialog;
     private final Scanner scanner;
 
-    public CommandLineApp(DialogManager dialogManager, Scanner scanner) {
-        this.dialogManager = dialogManager;
+    public CommandLineApp(UserDialog userDialog, Scanner scanner) {
+        this.userDialog = userDialog;
         this.scanner = scanner;
     }
 
     public CommandLineApp() {
-        this(new DialogManager(), new Scanner(System.in));
+        this(new UserDialog(new User(UUID.randomUUID())), new Scanner(System.in));
     }
 
     public void run() {
@@ -40,15 +41,15 @@ public class CommandLineApp {
     public void handleInput() {
         String input = scanner.nextLine();
 
-        var command = COMMANDS_MAP.getOrDefault(input, new Command(CommandType.TEXT_MESSAGE, input));
+        var command = COMMANDS_MAP.getOrDefault(input, new TextInputCommand(input));
 
-        var result = dialogManager.handleCommand(command);
+        var result = userDialog.handleCommand(command);
 
         System.out.println(result.message());
     }
 
     private void showHelp() {
-        var helpResult = dialogManager.handleCommand(COMMANDS_MAP.get("/help"));
+        var helpResult = userDialog.handleCommand(COMMANDS_MAP.get("/help"));
         System.out.println(helpResult.message());
     }
 }
