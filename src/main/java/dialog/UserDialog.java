@@ -7,6 +7,8 @@ import dialog.commandExecutors.abstractions.HandleTextCommandExecutor;
 import dialog.commandExecutors.addCard.AnswerInputCommandExecutor;
 import dialog.commandExecutors.addCard.CreateCardExecutor;
 import dialog.commandExecutors.addCard.QuestionInputCommandExecutor;
+import dialog.commandExecutors.readCard.ReadCardExecutor;
+import dialog.commandExecutors.readCard.ShowAnswerExecutor;
 import dialog.commandExecutors.showHelp.HelpCommandExecutor;
 import dialog.commands.TextInputCommand;
 import dialog.commands.abstractions.Command;
@@ -19,17 +21,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserDialog {
-    private static final Map<CommandExecutorType, CommandExecutorBase> commandExecutors = new HashMap<>(Map.of(
-            CommandExecutorType.AddCard, new CreateCardExecutor(),
-            CommandExecutorType.QuestionInput, new QuestionInputCommandExecutor(),
-            CommandExecutorType.AnswerInput, new AnswerInputCommandExecutor(new InMemoryCardStorage()),
-            CommandExecutorType.ShowHelp, new HelpCommandExecutor()
-    ));
+    private final Map<CommandExecutorType, CommandExecutorBase> commandExecutors;
     private DialogState state;
 
     public UserDialog(User user) {
         this.state = new DialogState(user)
                 .With(DialogStep.Menu);
+        var cardStorage = new InMemoryCardStorage();
+        this.commandExecutors = new HashMap<>(Map.of(
+                CommandExecutorType.AddCard, new CreateCardExecutor(),
+                CommandExecutorType.QuestionInput, new QuestionInputCommandExecutor(),
+                CommandExecutorType.AnswerInput, new AnswerInputCommandExecutor(cardStorage),
+                CommandExecutorType.ShowHelp, new HelpCommandExecutor(),
+                CommandExecutorType.ReadCard, new ReadCardExecutor(cardStorage),
+                CommandExecutorType.ShowAnswer, new ShowAnswerExecutor()
+        ));
     }
 
     public DialogResponse handleCommand(Command command) {

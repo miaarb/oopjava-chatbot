@@ -3,7 +3,9 @@ package app.commandLine;
 import dialog.UserDialog;
 import dialog.commands.CreateCardCommand;
 import dialog.commands.HelpCommand;
+import dialog.commands.ReadCardCommand;
 import dialog.commands.TextInputCommand;
+import dialog.commands.ShowAnswerCommand;
 import dialog.commands.abstractions.Command;
 import dialog.user.User;
 
@@ -16,7 +18,9 @@ import java.util.UUID;
 public class CommandLineApp {
     private static final Map<String, Command> COMMANDS_MAP = new HashMap<>(Map.of(
             "/add", new CreateCardCommand(),
-            "/help", new HelpCommand()
+            "/help", new HelpCommand(),
+            "/read", new ReadCardCommand(),
+            "/show", new ShowAnswerCommand()
     ));
     private final UserDialog userDialog;
     private final Scanner scanner;
