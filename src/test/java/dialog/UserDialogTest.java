@@ -1,19 +1,12 @@
 package dialog;
 
-import dialog.commandExecutors.addCard.CreateCardExecutor;
-import dialog.commands.CreateCardCommand;
-import dialog.commands.ReadCardCommand;
-import dialog.commands.ShowAnswerCommand;
-import dialog.commands.TextInputCommand;
-import dialog.internalCommands.handleTextInput.QuestionInputCommand;
-import dialog.state.DialogState;
+import dialog.commands.*;
 import dialog.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import org.mockito.Mockito;
 
 public class UserDialogTest {
     @Test
@@ -59,6 +52,20 @@ public class UserDialogTest {
 
         Assertions.assertTrue(response.message().contains("нельзя выполнить"));
 
+    }
+
+    @Test
+    public void handleCommandShouldHandleHelpCommand() {
+        var user = new User(UUID.randomUUID());
+        var userDialog = new UserDialog(user);
+
+        var response = userDialog.handleCommand(new HelpCommand());
+
+        Assertions.assertTrue(response.message().contains("команды"));
+        Assertions.assertTrue(response.message().contains("/add"));
+        Assertions.assertTrue(response.message().contains("/help"));
+        Assertions.assertTrue(response.message().contains("/read"));
+        Assertions.assertTrue(response.message().contains("/show"));
     }
 
 

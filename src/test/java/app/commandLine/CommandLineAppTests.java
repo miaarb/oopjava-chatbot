@@ -1,9 +1,13 @@
 package app.commandLine;
 
 
-import dialog.DialogManager;
 import dialog.DialogResponse;
-import domain.commands.ExecutableCommand;
+import dialog.UserDialog;
+import dialog.commands.CreateCardCommand;
+import dialog.commands.HelpCommand;
+import dialog.commands.ReadCardCommand;
+import dialog.commands.ShowAnswerCommand;
+import dialog.commands.abstractions.Command;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -16,26 +20,26 @@ import static org.mockito.Mockito.*;
 
 class CommandLineAppTests {
 
-    private static final Map<String, ExecutableCommand> COMMANDS_MAP = new HashMap<>(Map.of(
-            "/add", new ExecutableCommand(CommandType.ADD_CARD, null),
-            "/help", new ExecutableCommand(CommandType.SHOW_HELP, null),
-            "/read", new ExecutableCommand(CommandType.READ_CARD, null),
-            "/show", new ExecutableCommand(CommandType.SHOW_ANSWER, null)
+    private static final Map<String, Command> COMMANDS_MAP = new HashMap<>(Map.of(
+            "/add", new CreateCardCommand(),
+            "/help", new HelpCommand(),
+            "/read", new ReadCardCommand(),
+            "/show", new ShowAnswerCommand()
     ));
 
     @Test
     public void ShouldMapCommands() {
-        var manager = mock(DialogManager.class);
-        when(manager.handleCommand(Mockito.any())).thenReturn(new DialogResponse("success"));
+        var userDialog = mock(UserDialog.class);
+        when(userDialog.handleCommand(Mockito.any())).thenReturn(new DialogResponse("success"));
 
         var scanner = mock(Scanner.class);
 
-        var app = new CommandLineApp(manager, scanner);
+        var app = new CommandLineApp(userDialog, scanner);
 
         COMMANDS_MAP.forEach((input, command) -> {
             when(scanner.nextLine()).thenReturn(input);
             app.handleInput();
-            verify(manager).handleCommand(command);
+            verify(userDialog).handleCommand(Mockito.any(command.getClass()));
         });
     }
 }
