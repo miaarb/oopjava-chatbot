@@ -7,6 +7,8 @@ import dialog.state.DialogState;
 import dialog.state.DialogStep;
 import storage.CardStorage;
 
+import java.util.Map;
+
 public class ReadCardExecutor implements CommandExecutor {
     private final CardStorage cardStorage;
 
@@ -23,6 +25,7 @@ public class ReadCardExecutor implements CommandExecutor {
         return new CommandExecutionResult(
                 card.question(),
                 new DialogState(state.user)
-                        .With(DialogStep.QuestionShow));
+                        .With(DialogStep.QuestionShow)
+                        .With(Map.of("answer", card.answer())));
     }
 }

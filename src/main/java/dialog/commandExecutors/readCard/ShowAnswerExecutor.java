@@ -12,7 +12,7 @@ public class ShowAnswerExecutor implements CommandExecutor {
     }
 
     public CommandExecutionResult execute(DialogState state) {
-        var cardAnswer = state.stateArgs.get("cardAnswer");
+        var cardAnswer = state.stateArgs.get("answer");
 
         return new CommandExecutionResult(
                 cardAnswer,
