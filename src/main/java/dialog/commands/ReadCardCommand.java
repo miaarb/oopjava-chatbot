@@ -6,12 +6,12 @@ import dialog.state.DialogStep;
 
 public class ReadCardCommand implements Command {
     @Override
-    public DialogStep getSourceState() {
-        return DialogStep.Menu;
+    public DialogStep getSourceStep() {
+        return DialogStep.MENU;
     }
 
     @Override
     public CommandExecutorType getExecutorType() {
-        return CommandExecutorType.ReadCard;
+        return CommandExecutorType.READ_CARD;
     }
 }

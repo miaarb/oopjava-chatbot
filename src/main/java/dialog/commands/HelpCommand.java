@@ -5,11 +5,11 @@ import dialog.commands.abstractions.Command;
 import dialog.state.DialogStep;
 
 public class HelpCommand implements Command {
-    public DialogStep getSourceState() {
-        return DialogStep.Menu;
+    public DialogStep getSourceStep() {
+        return DialogStep.MENU;
     }
 
     public CommandExecutorType getExecutorType() {
-        return CommandExecutorType.ShowHelp;
+        return CommandExecutorType.SHOW_HELP;
     }
 }

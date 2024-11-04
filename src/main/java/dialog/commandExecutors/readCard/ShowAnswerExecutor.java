@@ -8,7 +8,7 @@ import dialog.state.DialogStep;
 
 public class ShowAnswerExecutor implements CommandExecutor {
     public CommandExecutorType getType() {
-        return CommandExecutorType.ShowAnswer;
+        return CommandExecutorType.SHOW_ANSWER;
     }
 
     public CommandExecutionResult execute(DialogState state) {
@@ -17,6 +17,6 @@ public class ShowAnswerExecutor implements CommandExecutor {
         return new CommandExecutionResult(
                 cardAnswer,
                 new DialogState(state.user)
-                        .With(DialogStep.Menu));
+                        .with(DialogStep.MENU));
     }
 }

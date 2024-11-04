@@ -28,7 +28,7 @@ class CommandLineAppTests {
     ));
 
     @Test
-    public void ShouldMapCommands() {
+    public void shouldMapCommands() {
         var userDialog = mock(UserDialog.class);
         when(userDialog.handleCommand(Mockito.any())).thenReturn(new DialogResponse("success"));
 

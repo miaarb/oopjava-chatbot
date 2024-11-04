@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class QuestionInputCommandExecutor implements HandleTextCommandExecutor {
     public CommandExecutorType getType() {
-        return CommandExecutorType.QuestionInput;
+        return CommandExecutorType.QUESTION_INPUT;
     }
 
     public CommandExecutionResult execute(DialogState state, String text) {
@@ -19,8 +19,8 @@ public class QuestionInputCommandExecutor implements HandleTextCommandExecutor {
         return new CommandExecutionResult(
                 "Введите ответ: ",
                 new DialogState(state.user)
-                        .With(DialogStep.AnswerInput)
-                        .With(new AnswerInputCommand())
-                        .With(Map.of("question", text)));
+                        .with(DialogStep.ANSWER_INPUT)
+                        .with(new AnswerInputCommand())
+                        .with(Map.of("question", text)));
     }
 }

@@ -3,12 +3,20 @@ package dialog;
 import dialog.commands.*;
 import dialog.user.User;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 
-public class UserDialogTest {
+public class UserDialogTests {
+
+    @BeforeEach
+    public void init() {
+        var storage = StateMachine.cardStorage;
+        storage.clear();
+    }
+
     @Test
     public void userDialogShouldHandleAddCardScenario() {
         var user = new User(UUID.randomUUID());

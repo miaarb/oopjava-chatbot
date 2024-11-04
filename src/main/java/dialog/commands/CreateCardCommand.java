@@ -6,11 +6,11 @@ import dialog.state.DialogStep;
 
 public class CreateCardCommand implements Command {
 
-    public DialogStep getSourceState() {
-        return DialogStep.Menu;
+    public DialogStep getSourceStep() {
+        return DialogStep.MENU;
     }
 
     public CommandExecutorType getExecutorType() {
-        return CommandExecutorType.AddCard;
+        return CommandExecutorType.ADD_CARD;
     }
 }

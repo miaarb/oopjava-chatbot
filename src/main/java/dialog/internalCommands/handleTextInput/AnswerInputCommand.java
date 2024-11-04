@@ -6,11 +6,11 @@ import dialog.state.DialogStep;
 
 public class AnswerInputCommand implements HandleTextCommand {
 
-    public DialogStep getSourceState() {
-        return DialogStep.AnswerInput;
+    public DialogStep getSourceStep() {
+        return DialogStep.ANSWER_INPUT;
     }
 
     public CommandExecutorType getExecutorType() {
-        return CommandExecutorType.AnswerInput;
+        return CommandExecutorType.ANSWER_INPUT;
     }
 }

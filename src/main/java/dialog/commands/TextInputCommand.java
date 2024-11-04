@@ -12,7 +12,7 @@ public class TextInputCommand implements Command {
         this.text = text;
     }
 
-    public DialogStep getSourceState() {
+    public DialogStep getSourceStep() {
         return null;
     }
 

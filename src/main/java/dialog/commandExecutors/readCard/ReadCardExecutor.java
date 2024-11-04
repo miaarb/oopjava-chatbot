@@ -17,7 +17,7 @@ public class ReadCardExecutor implements CommandExecutor {
     }
 
     public CommandExecutorType getType() {
-        return CommandExecutorType.ReadCard;
+        return CommandExecutorType.READ_CARD;
     }
 
     public CommandExecutionResult execute(DialogState state) {
@@ -25,7 +25,7 @@ public class ReadCardExecutor implements CommandExecutor {
         return new CommandExecutionResult(
                 card.question(),
                 new DialogState(state.user)
-                        .With(DialogStep.QuestionShow)
-                        .With(Map.of("answer", card.answer())));
+                        .with(DialogStep.QUESTION_SHOW)
+                        .with(Map.of("answer", card.answer())));
     }
 }

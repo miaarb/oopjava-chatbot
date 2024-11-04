@@ -20,10 +20,10 @@ public class HelpCommandExecutor implements CommandExecutor {
         return new CommandExecutionResult(
                 helpMessage,
                 new DialogState(state.user)
-                        .With(DialogStep.Menu));
+                        .with(DialogStep.MENU));
     }
 
     public CommandExecutorType getType() {
-        return CommandExecutorType.ShowHelp;
+        return CommandExecutorType.SHOW_HELP;
     }
 }

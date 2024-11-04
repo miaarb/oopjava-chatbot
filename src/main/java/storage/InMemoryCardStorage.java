@@ -21,12 +21,18 @@ public class InMemoryCardStorage implements CardStorage {
         if (cards.isEmpty())
             return null;
 
-        return cards.get(random.nextInt(storage.size()));
+        var index = random.nextInt(cards.size());
+
+        return cards.get(index);
     }
 
     public void add(UUID userId, Card card) {
         var cards = storage.getOrDefault(userId, new ArrayList<>());
         cards.add(card);
         storage.put(userId, cards);
+    }
+
+    public void clear() {
+        storage.clear();
     }
 }

@@ -6,12 +6,12 @@ import dialog.state.DialogStep;
 
 public class ShowAnswerCommand implements Command {
     @Override
-    public DialogStep getSourceState() {
-        return DialogStep.QuestionShow;
+    public DialogStep getSourceStep() {
+        return DialogStep.QUESTION_SHOW;
     }
 
     @Override
     public CommandExecutorType getExecutorType() {
-        return CommandExecutorType.ShowAnswer;
+        return CommandExecutorType.SHOW_ANSWER;
     }
 }

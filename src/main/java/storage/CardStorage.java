@@ -8,4 +8,6 @@ public interface CardStorage {
     Card getRandom(UUID userId);
 
     void add(UUID userId, Card card);
+
+    void clear();
 }

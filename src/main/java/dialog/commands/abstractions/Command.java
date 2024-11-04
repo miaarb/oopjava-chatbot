@@ -4,7 +4,7 @@ import dialog.commandExecutors.CommandExecutorType;
 import dialog.state.DialogStep;
 
 public interface Command {
-    DialogStep getSourceState();
+    DialogStep getSourceStep();
 
     CommandExecutorType getExecutorType();
 }

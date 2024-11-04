@@ -1,10 +1,10 @@
 package dialog.commandExecutors;
 
 public enum CommandExecutorType {
-    AddCard,
-    QuestionInput,
-    AnswerInput,
-    ReadCard,
-    ShowAnswer,
-    ShowHelp
+    ADD_CARD,
+    QUESTION_INPUT,
+    ANSWER_INPUT,
+    READ_CARD,
+    SHOW_ANSWER,
+    SHOW_HELP
 }

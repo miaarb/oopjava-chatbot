@@ -1,8 +1,8 @@
 package dialog.state;
 
 public enum DialogStep {
-    Menu,
-    QuestionInput,
-    AnswerInput,
-    QuestionShow,
+    MENU,
+    QUESTION_INPUT,
+    ANSWER_INPUT,
+    QUESTION_SHOW,
 }

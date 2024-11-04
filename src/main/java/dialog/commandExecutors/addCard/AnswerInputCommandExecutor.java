@@ -24,10 +24,10 @@ public class AnswerInputCommandExecutor implements HandleTextCommandExecutor {
         return new CommandExecutionResult(
                 "Карта добавлена",
                 new DialogState(state.user)
-                        .With(DialogStep.Menu));
+                        .with(DialogStep.MENU));
     }
 
     public CommandExecutorType getType() {
-        return CommandExecutorType.AnswerInput;
+        return CommandExecutorType.ANSWER_INPUT;
     }
 }

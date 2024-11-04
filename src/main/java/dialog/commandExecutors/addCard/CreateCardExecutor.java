@@ -10,14 +10,14 @@ import dialog.state.DialogStep;
 public class CreateCardExecutor implements CommandExecutor {
 
     public CommandExecutorType getType() {
-        return CommandExecutorType.AddCard;
+        return CommandExecutorType.ADD_CARD;
     }
 
     public CommandExecutionResult execute(DialogState state) {
         return new CommandExecutionResult(
                 "Введите вопрос: ",
                 new DialogState(state.user)
-                        .With(DialogStep.QuestionInput)
-                        .With(new QuestionInputCommand()));
+                        .with(DialogStep.QUESTION_INPUT)
+                        .with(new QuestionInputCommand()));
     }
 }

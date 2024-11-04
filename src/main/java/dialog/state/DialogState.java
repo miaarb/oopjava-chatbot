@@ -28,15 +28,15 @@ public class DialogState {
                 : null;
     }
 
-    public DialogState With(DialogStep newStep) {
+    public DialogState with(DialogStep newStep) {
         return new DialogState(this.user, newStep, this.handleInputCommand, this.stateArgs);
     }
 
-    public DialogState With(HandleTextCommand handleInputCommand) {
+    public DialogState with(HandleTextCommand handleInputCommand) {
         return new DialogState(this.user, this.currentStep, handleInputCommand, this.stateArgs);
     }
 
-    public DialogState With(Map<String, String> stateArgs) {
+    public DialogState with(Map<String, String> stateArgs) {
         return new DialogState(this.user, this.currentStep, this.handleInputCommand, stateArgs);
     }
 }
