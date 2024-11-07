@@ -5,19 +5,18 @@ import dialog.commands.*;
 import dialog.commands.abstractions.Command;
 import dialog.user.User;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
 
 
 public class CommandLineApp {
-    private static final Map<String, Command> COMMANDS_MAP = new HashMap<>(Map.of(
+    private static final Map<String, Command> COMMANDS_MAP = Map.of(
             "/add", new CreateCardCommand(),
             "/help", new HelpCommand(),
             "/read", new ReadCardCommand(),
             "/show", new ShowAnswerCommand()
-    ));
+    );
     private final UserDialog userDialog;
     private final Scanner scanner;
 

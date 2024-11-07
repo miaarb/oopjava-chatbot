@@ -16,7 +16,6 @@ import dialog.state.DialogState;
 import storage.CardStorage;
 import storage.InMemoryCardStorage;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class StateMachine {
@@ -25,14 +24,14 @@ public class StateMachine {
 
     static {
         cardStorage = new InMemoryCardStorage();
-        commandExecutors = new HashMap<>(Map.of(
+        commandExecutors = Map.of(
                 CommandExecutorType.ADD_CARD, new CreateCardExecutor(),
                 CommandExecutorType.QUESTION_INPUT, new QuestionInputCommandExecutor(),
                 CommandExecutorType.ANSWER_INPUT, new AnswerInputCommandExecutor(cardStorage),
                 CommandExecutorType.SHOW_HELP, new HelpCommandExecutor(),
                 CommandExecutorType.READ_CARD, new ReadCardExecutor(cardStorage),
                 CommandExecutorType.SHOW_ANSWER, new ShowAnswerExecutor()
-        ));
+        );
     }
 
     private DialogState state;
