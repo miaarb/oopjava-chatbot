@@ -3,24 +3,18 @@ package dialog;
 import dialog.commands.*;
 import dialog.user.User;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import storage.InMemoryCardStorage;
 
 import java.util.UUID;
 
 
 public class UserDialogTests {
 
-    @BeforeEach
-    public void init() {
-        var storage = StateMachine.cardStorage;
-        storage.clear();
-    }
-
     @Test
     public void userDialogShouldHandleAddCardScenario() {
         var user = new User(UUID.randomUUID());
-        var userDialog = new UserDialog(user);
+        var userDialog = new UserDialog(user, new InMemoryCardStorage());
 
         mustCreateCard(userDialog, "some question", "some answer");
     }
@@ -28,7 +22,7 @@ public class UserDialogTests {
     @Test
     public void userShouldCanReadCardAndAnswer() {
         var user = new User(UUID.randomUUID());
-        var userDialog = new UserDialog(user);
+        var userDialog = new UserDialog(user, new InMemoryCardStorage());
         var question = "Вечный вопрос: сас или сос?";
         var answer = "42";
         mustCreateCard(userDialog, question, answer);
@@ -43,7 +37,7 @@ public class UserDialogTests {
     @Test
     public void handleCommandShouldHandleUnknownCommand() {
         var user = new User(UUID.randomUUID());
-        var userDialog = new UserDialog(user);
+        var userDialog = new UserDialog(user, new InMemoryCardStorage());
 
         var response = userDialog.handleCommand(new TextInputCommand("bad command"));
 
@@ -53,7 +47,7 @@ public class UserDialogTests {
     @Test
     public void handleCommandShouldHandleWrongCommand() {
         var user = new User(UUID.randomUUID());
-        var userDialog = new UserDialog(user);
+        var userDialog = new UserDialog(user, new InMemoryCardStorage());
         userDialog.handleCommand(new CreateCardCommand());
 
         var response = userDialog.handleCommand(new ShowAnswerCommand());
@@ -65,7 +59,7 @@ public class UserDialogTests {
     @Test
     public void handleCommandShouldHandleHelpCommand() {
         var user = new User(UUID.randomUUID());
-        var userDialog = new UserDialog(user);
+        var userDialog = new UserDialog(user, new InMemoryCardStorage());
 
         var response = userDialog.handleCommand(new HelpCommand());
 

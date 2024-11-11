@@ -4,6 +4,7 @@ import dialog.UserDialog;
 import dialog.commands.*;
 import dialog.commands.abstractions.Command;
 import dialog.user.User;
+import storage.InMemoryCardStorage;
 
 import java.util.Map;
 import java.util.Scanner;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 
 public class CommandLineApp {
-    private static final Map<String, Command> COMMANDS_MAP = Map.of(
+    private final Map<String, Command> commandsMap = Map.of(
             "/add", new CreateCardCommand(),
             "/help", new HelpCommand(),
             "/read", new ReadCardCommand(),
@@ -26,7 +27,8 @@ public class CommandLineApp {
     }
 
     public CommandLineApp() {
-        this(new UserDialog(new User(UUID.randomUUID())), new Scanner(System.in));
+        this(new UserDialog(new User(UUID.randomUUID()), new InMemoryCardStorage()),
+                new Scanner(System.in));
     }
 
     public void run() {
@@ -40,7 +42,7 @@ public class CommandLineApp {
     public void handleInput() {
         String input = scanner.nextLine();
 
-        var command = COMMANDS_MAP.getOrDefault(input, new TextInputCommand(input));
+        var command = commandsMap.getOrDefault(input, new TextInputCommand(input));
 
         var result = userDialog.handleCommand(command);
 
@@ -48,7 +50,7 @@ public class CommandLineApp {
     }
 
     private void showHelp() {
-        var helpResult = userDialog.handleCommand(COMMANDS_MAP.get("/help"));
+        var helpResult = userDialog.handleCommand(commandsMap.get("/help"));
         System.out.println(helpResult.message());
     }
 }
