@@ -5,11 +5,10 @@ import dialog.commandExecutors.CommandExecutorType;
 import dialog.commandExecutors.abstractions.CommandExecutor;
 import dialog.state.DialogState;
 import dialog.state.DialogStep;
+import dialog.state.ReadAnswerState;
 import storage.CardStorage;
 
-import java.util.Map;
-
-public class ReadCardExecutor implements CommandExecutor {
+public class ReadCardExecutor implements CommandExecutor<DialogState> {
     private final CardStorage cardStorage;
 
     public ReadCardExecutor(CardStorage cardStorage) {
@@ -31,8 +30,6 @@ public class ReadCardExecutor implements CommandExecutor {
 
         return new CommandExecutionResult(
                 card.question(),
-                new DialogState(state.user)
-                        .with(DialogStep.QUESTION_SHOW)
-                        .with(Map.of("answer", card.answer())));
+                new ReadAnswerState(state.user, card.answer()));
     }
 }

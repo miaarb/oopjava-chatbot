@@ -1,8 +1,7 @@
 package dialog.commandExecutors.abstractions;
 
 import dialog.commandExecutors.CommandExecutionResult;
-import dialog.state.DialogState;
 
-public interface CommandExecutor extends CommandExecutorBase {
-    CommandExecutionResult execute(DialogState state);
+public interface CommandExecutor<T> extends CommandExecutorBase {
+    CommandExecutionResult execute(T state);
 }

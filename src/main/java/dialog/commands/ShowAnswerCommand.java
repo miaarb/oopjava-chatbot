@@ -7,7 +7,7 @@ import dialog.state.DialogStep;
 public class ShowAnswerCommand implements Command {
     @Override
     public DialogStep getSourceStep() {
-        return DialogStep.QUESTION_SHOW;
+        return DialogStep.ANSWER_SHOW;
     }
 
     @Override

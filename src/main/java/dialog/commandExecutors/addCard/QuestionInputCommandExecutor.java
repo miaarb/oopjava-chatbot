@@ -3,13 +3,10 @@ package dialog.commandExecutors.addCard;
 import dialog.commandExecutors.CommandExecutionResult;
 import dialog.commandExecutors.CommandExecutorType;
 import dialog.commandExecutors.abstractions.HandleTextCommandExecutor;
-import dialog.internalCommands.handleTextInput.AnswerInputCommand;
+import dialog.state.AddAnswerState;
 import dialog.state.DialogState;
-import dialog.state.DialogStep;
 
-import java.util.Map;
-
-public class QuestionInputCommandExecutor implements HandleTextCommandExecutor {
+public class QuestionInputCommandExecutor implements HandleTextCommandExecutor<DialogState> {
     public CommandExecutorType getType() {
         return CommandExecutorType.QUESTION_INPUT;
     }
@@ -18,9 +15,6 @@ public class QuestionInputCommandExecutor implements HandleTextCommandExecutor {
 
         return new CommandExecutionResult(
                 "Введите ответ: ",
-                new DialogState(state.user)
-                        .with(DialogStep.ANSWER_INPUT)
-                        .with(new AnswerInputCommand())
-                        .with(Map.of("question", text)));
+                new AddAnswerState(state.user, text));
     }
 }

@@ -7,7 +7,7 @@ import dialog.internalCommands.handleTextInput.QuestionInputCommand;
 import dialog.state.DialogState;
 import dialog.state.DialogStep;
 
-public class CreateCardExecutor implements CommandExecutor {
+public class AddCardExecutor implements CommandExecutor<DialogState> {
 
     public CommandExecutorType getType() {
         return CommandExecutorType.ADD_CARD;
