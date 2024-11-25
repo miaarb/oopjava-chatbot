@@ -1,6 +1,6 @@
 package dialog.state;
 
-import dialog.internalCommands.handleTextInput.AnswerInputCommand;
+import dialog.internalcommands.handletextinput.AnswerInputCommand;
 import dialog.user.User;
 
 public final class AddAnswerState extends DialogState {

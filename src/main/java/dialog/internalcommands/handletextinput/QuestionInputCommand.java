@@ -1,4 +1,4 @@
-package dialog.internalCommands.handleTextInput;
+package dialog.internalcommands.handletextinput;
 
 import dialog.state.DialogStep;
 

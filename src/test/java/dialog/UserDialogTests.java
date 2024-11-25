@@ -1,6 +1,10 @@
 package dialog;
 
-import dialog.commands.*;
+import dialog.commands.AddCardCommand;
+import dialog.commands.HelpCommand;
+import dialog.commands.ReadCardCommand;
+import dialog.commands.ShowAnswerCommand;
+import dialog.commands.TextInputCommand;
 import dialog.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

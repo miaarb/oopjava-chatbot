@@ -1,7 +1,11 @@
-package app.commandLine;
+package app.commandline;
 
 import dialog.UserDialog;
-import dialog.commands.*;
+import dialog.commands.AddCardCommand;
+import dialog.commands.HelpCommand;
+import dialog.commands.ReadCardCommand;
+import dialog.commands.ShowAnswerCommand;
+import dialog.commands.TextInputCommand;
 import dialog.commands.abstractions.Command;
 import dialog.user.User;
 import storage.InMemoryCardStorage;

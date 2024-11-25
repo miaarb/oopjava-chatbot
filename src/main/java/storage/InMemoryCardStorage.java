@@ -2,7 +2,13 @@ package storage;
 
 import domain.card.Card;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+
 
 public class InMemoryCardStorage implements CardStorage {
     private final Map<UUID, List<Card>> storage = new HashMap<>();
@@ -18,8 +24,9 @@ public class InMemoryCardStorage implements CardStorage {
 
     public Card getRandom(UUID userId) {
         var cards = storage.getOrDefault(userId, new ArrayList<>());
-        if (cards.isEmpty())
+        if (cards.isEmpty()) {
             return null;
+        }
 
         var index = random.nextInt(cards.size());
 

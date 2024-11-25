@@ -1,6 +1,6 @@
 package dialog.state;
 
-import dialog.internalCommands.handleTextInput.HandleTextCommand;
+import dialog.internalcommands.handletextinput.HandleTextCommand;
 import dialog.user.User;
 
 public sealed class DialogState permits AddAnswerState, ReadAnswerState {

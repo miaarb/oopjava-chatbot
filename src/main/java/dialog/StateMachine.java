@@ -6,10 +6,14 @@ import dialog.commandExecutors.addCard.QuestionInputCommandExecutor;
 import dialog.commandExecutors.readCard.ReadCardExecutor;
 import dialog.commandExecutors.readCard.ShowAnswerExecutor;
 import dialog.commandExecutors.showHelp.HelpCommandExecutor;
-import dialog.commands.*;
+import dialog.commands.AddCardCommand;
+import dialog.commands.HelpCommand;
+import dialog.commands.ReadCardCommand;
+import dialog.commands.ShowAnswerCommand;
+import dialog.commands.TextInputCommand;
 import dialog.commands.abstractions.Command;
-import dialog.internalCommands.handleTextInput.AnswerInputCommand;
-import dialog.internalCommands.handleTextInput.QuestionInputCommand;
+import dialog.internalcommands.handletextinput.AnswerInputCommand;
+import dialog.internalcommands.handletextinput.QuestionInputCommand;
 import dialog.state.AddAnswerState;
 import dialog.state.DialogState;
 import dialog.state.ReadAnswerState;
@@ -38,8 +42,9 @@ public class StateMachine {
     public DialogResponse handleCommand(Command command) {
 
         if (command instanceof TextInputCommand textInputCommand) {
-            if (this.state.handleInputCommand == null)
+            if (this.state.handleInputCommand == null) {
                 return new DialogResponse("Неизвестная команда");
+            }
 
             command = this.state.handleInputCommand;
 
