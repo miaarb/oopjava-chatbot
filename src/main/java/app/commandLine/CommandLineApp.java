@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class CommandLineApp {
     private final Map<String, Command> commandsMap = Map.of(
-            "/add", new CreateCardCommand(),
+            "/add", new AddCardCommand(),
             "/help", new HelpCommand(),
             "/read", new ReadCardCommand(),
             "/show", new ShowAnswerCommand()

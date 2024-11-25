@@ -1,7 +1,6 @@
 package dialog.commandExecutors.readCard;
 
 import dialog.commandExecutors.CommandExecutionResult;
-import dialog.commandExecutors.CommandExecutorType;
 import dialog.commandExecutors.abstractions.CommandExecutor;
 import dialog.state.DialogState;
 import dialog.state.DialogStep;
@@ -13,10 +12,6 @@ public class ReadCardExecutor implements CommandExecutor<DialogState> {
 
     public ReadCardExecutor(CardStorage cardStorage) {
         this.cardStorage = cardStorage;
-    }
-
-    public CommandExecutorType getType() {
-        return CommandExecutorType.READ_CARD;
     }
 
     public CommandExecutionResult execute(DialogState state) {

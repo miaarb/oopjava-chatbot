@@ -1,37 +1,38 @@
 package dialog;
 
-import dialog.commandExecutors.CommandExecutorType;
-import dialog.commandExecutors.abstractions.CommandExecutor;
-import dialog.commandExecutors.abstractions.CommandExecutorBase;
 import dialog.commandExecutors.addCard.AddCardExecutor;
 import dialog.commandExecutors.addCard.AnswerInputCommandExecutor;
 import dialog.commandExecutors.addCard.QuestionInputCommandExecutor;
 import dialog.commandExecutors.readCard.ReadCardExecutor;
 import dialog.commandExecutors.readCard.ShowAnswerExecutor;
 import dialog.commandExecutors.showHelp.HelpCommandExecutor;
-import dialog.commands.TextInputCommand;
+import dialog.commands.*;
 import dialog.commands.abstractions.Command;
+import dialog.internalCommands.handleTextInput.AnswerInputCommand;
+import dialog.internalCommands.handleTextInput.QuestionInputCommand;
 import dialog.state.AddAnswerState;
 import dialog.state.DialogState;
+import dialog.state.ReadAnswerState;
 import storage.CardStorage;
 
-import java.util.Map;
-
 public class StateMachine {
-    private final Map<CommandExecutorType, CommandExecutorBase> commandExecutors;
+    private final AddCardExecutor addCardExecutor;
+    private final QuestionInputCommandExecutor questionInputCommandExecutor;
+    private final AnswerInputCommandExecutor answerInputCommandExecutor;
+    private final HelpCommandExecutor helpCommandExecutor;
+    private final ReadCardExecutor readCardExecutor;
+    private final ShowAnswerExecutor showAnswerExecutor;
 
     private DialogState state;
 
     public StateMachine(DialogState state, CardStorage cardStorage) {
         this.state = state;
-        this.commandExecutors = Map.of(
-                CommandExecutorType.ADD_CARD, new AddCardExecutor(),
-                CommandExecutorType.QUESTION_INPUT, new QuestionInputCommandExecutor(),
-                CommandExecutorType.ANSWER_INPUT, new AnswerInputCommandExecutor(cardStorage),
-                CommandExecutorType.SHOW_HELP, new HelpCommandExecutor(),
-                CommandExecutorType.READ_CARD, new ReadCardExecutor(cardStorage),
-                CommandExecutorType.SHOW_ANSWER, new ShowAnswerExecutor()
-        );
+        addCardExecutor = new AddCardExecutor();
+        questionInputCommandExecutor = new QuestionInputCommandExecutor();
+        helpCommandExecutor = new HelpCommandExecutor();
+        showAnswerExecutor = new ShowAnswerExecutor();
+        answerInputCommandExecutor = new AnswerInputCommandExecutor(cardStorage);
+        readCardExecutor = new ReadCardExecutor(cardStorage);
     }
 
     public DialogResponse handleCommand(Command command) {
@@ -40,26 +41,34 @@ public class StateMachine {
             if (this.state.handleInputCommand == null)
                 return new DialogResponse("Неизвестная команда");
 
-            var executor = commandExecutors.get(this.state.handleInputCommand.getExecutorType());
+            command = this.state.handleInputCommand;
 
-            var result = switch (this.state) {
-                case AddAnswerState addAnswerState ->
-                        ((AnswerInputCommandExecutor) executor).execute(addAnswerState, textInputCommand.text);
-                default -> throw new IllegalStateException("Unexpected state value: " + this.state);
-            };
-
-            this.state = result.nextState();
-            return new DialogResponse(result.message());
+            return executeCommand(command, textInputCommand.text);
         }
 
         if (command.getSourceStep() != this.state.currentStep) {
             return new DialogResponse("Сейчас нельзя выполнить эту команду");
         }
 
-        var executor = commandExecutors.get(command.getExecutorType());
+        return executeCommand(command);
+    }
 
-        var result = ((CommandExecutor) executor).execute(this.state);
-        this.state = result.nextState();
+    private DialogResponse executeCommand(Command command) {
+        return executeCommand(command, null);
+    }
+
+    private DialogResponse executeCommand(Command command, String text) {
+        var result = switch (command) {
+            case AddCardCommand _ -> addCardExecutor.execute(state);
+            case HelpCommand _ -> helpCommandExecutor.execute(state);
+            case ReadCardCommand _ -> readCardExecutor.execute(state);
+            case ShowAnswerCommand _ -> showAnswerExecutor.execute((ReadAnswerState) state);
+            case AnswerInputCommand _ -> answerInputCommandExecutor.execute((AddAnswerState) state, text);
+            case QuestionInputCommand _ -> questionInputCommandExecutor.execute(state, text);
+            default -> throw new IllegalArgumentException("Unexpected command:" + command);
+        };
+
+        state = result.nextState();
         return new DialogResponse(result.message());
     }
 }

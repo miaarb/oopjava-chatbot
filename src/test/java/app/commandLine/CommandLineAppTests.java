@@ -3,7 +3,7 @@ package app.commandLine;
 
 import dialog.DialogResponse;
 import dialog.UserDialog;
-import dialog.commands.CreateCardCommand;
+import dialog.commands.AddCardCommand;
 import dialog.commands.HelpCommand;
 import dialog.commands.ReadCardCommand;
 import dialog.commands.ShowAnswerCommand;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class CommandLineAppTests {
 
     private static final Map<String, Command> COMMANDS_MAP = new HashMap<>(Map.of(
-            "/add", new CreateCardCommand(),
+            "/add", new AddCardCommand(),
             "/help", new HelpCommand(),
             "/read", new ReadCardCommand(),
             "/show", new ShowAnswerCommand()

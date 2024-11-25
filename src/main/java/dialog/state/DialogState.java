@@ -14,7 +14,7 @@ public sealed class DialogState permits AddAnswerState, ReadAnswerState {
         this.handleInputCommand = null;
     }
 
-    public DialogState(User user, DialogStep currentStep, HandleTextCommand handleInputCommand) {
+    protected DialogState(User user, DialogStep currentStep, HandleTextCommand handleInputCommand) {
         this.user = user;
         this.currentStep = currentStep;
         this.handleInputCommand = handleInputCommand;

@@ -1,7 +1,6 @@
 package dialog.commandExecutors.showHelp;
 
 import dialog.commandExecutors.CommandExecutionResult;
-import dialog.commandExecutors.CommandExecutorType;
 import dialog.commandExecutors.abstractions.CommandExecutor;
 import dialog.state.DialogState;
 import dialog.state.DialogStep;
@@ -21,9 +20,5 @@ public class HelpCommandExecutor implements CommandExecutor<DialogState> {
                 helpMessage,
                 new DialogState(state.user)
                         .with(DialogStep.MENU));
-    }
-
-    public CommandExecutorType getType() {
-        return CommandExecutorType.SHOW_HELP;
     }
 }

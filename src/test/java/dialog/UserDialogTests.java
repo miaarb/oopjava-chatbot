@@ -48,7 +48,7 @@ public class UserDialogTests {
     public void handleCommandShouldHandleWrongCommand() {
         var user = new User(UUID.randomUUID());
         var userDialog = new UserDialog(user, new InMemoryCardStorage());
-        userDialog.handleCommand(new CreateCardCommand());
+        userDialog.handleCommand(new AddCardCommand());
 
         var response = userDialog.handleCommand(new ShowAnswerCommand());
 
@@ -74,7 +74,7 @@ public class UserDialogTests {
     // Helpers
 
     private void mustCreateCard(UserDialog userDialog, String question, String answer) {
-        var createCardResponse = userDialog.handleCommand(new CreateCardCommand());
+        var createCardResponse = userDialog.handleCommand(new AddCardCommand());
         Assertions.assertTrue(createCardResponse.message().contains("Введите вопрос"));
 
         var questionInputResponse = userDialog.handleCommand(new TextInputCommand(question));

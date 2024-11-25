@@ -1,7 +1,6 @@
 package dialog.commandExecutors.addCard;
 
 import dialog.commandExecutors.CommandExecutionResult;
-import dialog.commandExecutors.CommandExecutorType;
 import dialog.commandExecutors.abstractions.HandleTextCommandExecutor;
 import dialog.state.AddAnswerState;
 import dialog.state.DialogState;
@@ -26,9 +25,5 @@ public class AnswerInputCommandExecutor implements HandleTextCommandExecutor<Add
                 "Карта добавлена",
                 new DialogState(state.user)
                         .with(DialogStep.MENU));
-    }
-
-    public CommandExecutorType getType() {
-        return CommandExecutorType.ANSWER_INPUT;
     }
 }
