@@ -1,7 +1,7 @@
-package dialog.commandExecutors.addCard;
+package dialog.commandexecutors.addcard;
 
-import dialog.commandExecutors.CommandExecutionResult;
-import dialog.commandExecutors.abstractions.HandleTextCommandExecutor;
+import dialog.commandexecutors.CommandExecutionResult;
+import dialog.commandexecutors.abstractions.HandleTextCommandExecutor;
 import dialog.state.AddAnswerState;
 import dialog.state.DialogState;
 

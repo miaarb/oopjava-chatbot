@@ -1,6 +1,6 @@
-package dialog.commandExecutors.abstractions;
+package dialog.commandexecutors.abstractions;
 
-import dialog.commandExecutors.CommandExecutionResult;
+import dialog.commandexecutors.CommandExecutionResult;
 import dialog.state.DialogState;
 
 public interface HandleTextCommandExecutor<T extends DialogState> {

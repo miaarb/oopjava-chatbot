@@ -1,4 +1,4 @@
-package dialog.commandExecutors;
+package dialog.commandexecutors;
 
 import dialog.state.DialogState;
 

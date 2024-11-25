@@ -1,7 +1,7 @@
-package dialog.commandExecutors.readCard;
+package dialog.commandexecutors.readcard;
 
-import dialog.commandExecutors.CommandExecutionResult;
-import dialog.commandExecutors.abstractions.CommandExecutor;
+import dialog.commandexecutors.CommandExecutionResult;
+import dialog.commandexecutors.abstractions.CommandExecutor;
 import dialog.state.DialogState;
 import dialog.state.DialogStep;
 import dialog.state.ReadAnswerState;

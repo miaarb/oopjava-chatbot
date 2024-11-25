@@ -1,11 +1,11 @@
 package dialog;
 
-import dialog.commandExecutors.addCard.AddCardExecutor;
-import dialog.commandExecutors.addCard.AnswerInputCommandExecutor;
-import dialog.commandExecutors.addCard.QuestionInputCommandExecutor;
-import dialog.commandExecutors.readCard.ReadCardExecutor;
-import dialog.commandExecutors.readCard.ShowAnswerExecutor;
-import dialog.commandExecutors.showHelp.HelpCommandExecutor;
+import dialog.commandexecutors.addcard.AddCardExecutor;
+import dialog.commandexecutors.addcard.AnswerInputCommandExecutor;
+import dialog.commandexecutors.addcard.QuestionInputCommandExecutor;
+import dialog.commandexecutors.readcard.ReadCardExecutor;
+import dialog.commandexecutors.readcard.ShowAnswerExecutor;
+import dialog.commandexecutors.showhelp.HelpCommandExecutor;
 import dialog.commands.AddCardCommand;
 import dialog.commands.HelpCommand;
 import dialog.commands.ReadCardCommand;
