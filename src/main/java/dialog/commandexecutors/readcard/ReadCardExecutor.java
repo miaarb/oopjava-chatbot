@@ -17,11 +17,12 @@ public class ReadCardExecutor implements CommandExecutor<DialogState> {
     public CommandExecutionResult execute(DialogState state) {
         var card = cardStorage.getRandom(state.user.id());
 
-        if (card == null)
+        if (card == null) {
             return new CommandExecutionResult(
                     "У вас пока нет добавленных карт",
                     new DialogState(state.user)
                             .with(DialogStep.MENU));
+        }
 
         return new CommandExecutionResult(
                 card.question(),
