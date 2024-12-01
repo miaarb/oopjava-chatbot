@@ -3,11 +3,15 @@ package storage;
 import domain.card.Card;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
+
 
 public class InMemoryCardStorage implements CardStorage {
-    private final List<Card> cards = new ArrayList<>();
+    private final Map<UUID, List<Card>> storage = new HashMap<>();
     private final Random random;
 
     public InMemoryCardStorage(Random random) {
@@ -18,16 +22,24 @@ public class InMemoryCardStorage implements CardStorage {
         this(new Random());
     }
 
-    @Override
-    public Card getRandom() {
-        if(cards.isEmpty())
+    public Card getRandom(UUID userId) {
+        var cards = storage.getOrDefault(userId, new ArrayList<>());
+        if (cards.isEmpty()) {
             return null;
+        }
 
-        return cards.get(random.nextInt(cards.size()));
+        var index = random.nextInt(cards.size());
+
+        return cards.get(index);
     }
 
-    @Override
-    public void add(Card card) {
+    public void add(UUID userId, Card card) {
+        var cards = storage.getOrDefault(userId, new ArrayList<>());
         cards.add(card);
+        storage.put(userId, cards);
+    }
+
+    public void clear() {
+        storage.clear();
     }
 }
