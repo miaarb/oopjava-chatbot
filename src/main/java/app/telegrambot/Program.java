@@ -13,8 +13,8 @@ public class Program {
 
         var botToken = args[0];
 
-        try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
-            botsApplication.registerBot(botToken, new TelegramBot(new OkHttpTelegramClient(botToken)));
+        try (var botApplication = new TelegramBotsLongPollingApplication()) {
+            botApplication.registerBot(botToken, new TelegramBot(new OkHttpTelegramClient(botToken)));
             System.out.println("Bot started");
             Thread.currentThread().join();
         } catch (Exception e) {

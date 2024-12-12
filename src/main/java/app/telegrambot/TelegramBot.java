@@ -27,9 +27,10 @@ public class TelegramBot implements LongPollingSingleThreadUpdateConsumer {
             "/read", new ReadCardCommand(),
             "/show", new ShowAnswerCommand()
     );
+    private final CardStorage cardStorage = new InMemoryCardStorage();
+
     private final TelegramClient telegramClient;
     private final Map<Long, UserDialog> userDialogs;
-    private final CardStorage cardStorage = new InMemoryCardStorage();
 
     public TelegramBot(TelegramClient telegramClient) {
         this.telegramClient = telegramClient;
@@ -44,21 +45,21 @@ public class TelegramBot implements LongPollingSingleThreadUpdateConsumer {
     @Override
     public void consume(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            var message_text = update.getMessage().getText();
-            var chat_id = update.getMessage().getChatId();
+            var messageText = update.getMessage().getText();
+            var chatId = update.getMessage().getChatId();
 
-            if (!userDialogs.containsKey(chat_id)) {
-                userDialogs.put(chat_id, new UserDialog(new User(chat_id), cardStorage));
+            if (!userDialogs.containsKey(chatId)) {
+                userDialogs.put(chatId, new UserDialog(new User(chatId), cardStorage));
             }
 
-            var dialog = this.userDialogs.get(chat_id);
+            var dialog = this.userDialogs.get(chatId);
 
-            var command = COMMANDS_MAP.getOrDefault(message_text, new TextInputCommand(message_text));
+            var command = COMMANDS_MAP.getOrDefault(messageText, new TextInputCommand(messageText));
             var response = dialog.handleCommand(command).message();
 
             SendMessage message = SendMessage
                     .builder()
-                    .chatId(chat_id)
+                    .chatId(chatId)
                     .text(response)
                     .build();
             try {
