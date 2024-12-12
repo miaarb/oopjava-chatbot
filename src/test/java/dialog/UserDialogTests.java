@@ -67,7 +67,7 @@ public class UserDialogTests {
 
         var response = userDialog.handleCommand(new HelpCommand());
 
-        Assertions.assertTrue(response.message().contains("команды"));
+        Assertions.assertTrue(response.message().contains("Команды"));
         Assertions.assertTrue(response.message().contains("/add"));
         Assertions.assertTrue(response.message().contains("/help"));
         Assertions.assertTrue(response.message().contains("/read"));
