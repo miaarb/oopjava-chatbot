@@ -12,7 +12,6 @@ import storage.InMemoryCardStorage;
 
 import java.util.Map;
 import java.util.Scanner;
-import java.util.UUID;
 
 
 public class CommandLineApp {
@@ -31,7 +30,7 @@ public class CommandLineApp {
     }
 
     public CommandLineApp() {
-        this(new UserDialog(new User(UUID.randomUUID()), new InMemoryCardStorage()),
+        this(new UserDialog(new User(0L), new InMemoryCardStorage()),
                 new Scanner(System.in));
     }
 
