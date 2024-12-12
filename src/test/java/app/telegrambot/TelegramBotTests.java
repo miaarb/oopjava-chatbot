@@ -38,14 +38,6 @@ class TelegramBotTests {
 
     @Test
     public void shouldMapCommands() throws TelegramApiException {
-        var userId = new Random().nextLong();
-        var userDialog = mock(UserDialog.class);
-        when(userDialog.handleCommand(Mockito.any())).thenReturn(new DialogResponse("success"));
-
-        var telegramClient = mock(OkHttpTelegramClient.class);
-        when(telegramClient.execute(Mockito.any(SendMessage.class))).thenReturn(new Message());
-
-        var app = new TelegramBot(telegramClient, Map.of(userId, userDialog));
 
         var update = mock(Update.class);
         var message = mock(Message.class);
@@ -53,7 +45,17 @@ class TelegramBotTests {
         when(update.hasMessage()).thenReturn(true);
         when(update.getMessage()).thenReturn(message);
         when(message.hasText()).thenReturn(true);
+
+        var userId = new Random().nextLong();
         when(message.getChatId()).thenReturn(userId);
+
+        var telegramClient = mock(OkHttpTelegramClient.class);
+        when(telegramClient.execute(Mockito.any(SendMessage.class))).thenReturn(new Message());
+
+        var userDialog = mock(UserDialog.class);
+        when(userDialog.handleCommand(Mockito.any())).thenReturn(new DialogResponse("success"));
+
+        var app = new TelegramBot(telegramClient, Map.of(userId, userDialog));
 
         COMMANDS_MAP.forEach((input, command) -> {
             when(update.getMessage().getText()).thenReturn(input);
