@@ -64,7 +64,7 @@ public class TelegramBot implements LongPollingSingleThreadUpdateConsumer {
             try {
                 telegramClient.execute(message);
             } catch (TelegramApiException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
     }
