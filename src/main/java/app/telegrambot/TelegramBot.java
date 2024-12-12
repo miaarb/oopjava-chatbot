@@ -57,7 +57,7 @@ public class TelegramBot implements LongPollingSingleThreadUpdateConsumer {
             var command = COMMANDS_MAP.getOrDefault(messageText, new TextInputCommand(messageText));
             var response = dialog.handleCommand(command).message();
 
-            SendMessage message = SendMessage
+            var message = SendMessage
                     .builder()
                     .chatId(chatId)
                     .text(response)
