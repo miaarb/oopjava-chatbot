@@ -1,24 +1,15 @@
 package app.telegrambot;
 
-import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
-import org.telegram.telegrambots.longpolling.TelegramBotsLongPollingApplication;
+import storage.InMemoryCardStorage;
 
 
 public class Program {
     public static void main(String[] args) {
-        if (args.length == 0 || args[0].isBlank()) {
-            System.out.println("Bot-token in arguments not found or empty");
+        if (args.length != 1 || args[0].isBlank()) {
+            System.out.println("Expected one argument: Bot-token for telegram");
             return;
         }
-
-        var botToken = args[0];
-
-        try (var botApplication = new TelegramBotsLongPollingApplication()) {
-            botApplication.registerBot(botToken, new TelegramBot(new OkHttpTelegramClient(botToken)));
-            System.out.println("Bot started");
-            Thread.currentThread().join();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        var app = new TelegramBotApp(args[0], new InMemoryCardStorage());
+        app.run();
     }
 }

@@ -16,6 +16,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.message.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import storage.InMemoryCardStorage;
 
 import java.util.Map;
 import java.util.Random;
@@ -55,7 +56,7 @@ class TelegramBotTests {
         var userDialog = mock(UserDialog.class);
         when(userDialog.handleCommand(Mockito.any())).thenReturn(new DialogResponse("success"));
 
-        var app = new TelegramBot(telegramClient, Map.of(userId, userDialog));
+        var app = new TelegramBot(telegramClient, new InMemoryCardStorage(), Map.of(userId, userDialog));
 
         COMMANDS_MAP.forEach((input, command) -> {
             when(update.getMessage().getText()).thenReturn(input);

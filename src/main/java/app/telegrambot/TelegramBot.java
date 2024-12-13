@@ -14,7 +14,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 import storage.CardStorage;
-import storage.InMemoryCardStorage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,18 +26,20 @@ public class TelegramBot implements LongPollingSingleThreadUpdateConsumer {
             "/read", new ReadCardCommand(),
             "/show", new ShowAnswerCommand()
     );
-    private final CardStorage cardStorage = new InMemoryCardStorage();
+    private final CardStorage cardStorage;
 
     private final TelegramClient telegramClient;
     private final Map<Long, UserDialog> userDialogs;
 
-    public TelegramBot(TelegramClient telegramClient) {
+    public TelegramBot(TelegramClient telegramClient, CardStorage cardStorage) {
         this.telegramClient = telegramClient;
+        this.cardStorage = cardStorage;
         this.userDialogs = new HashMap<>();
     }
 
-    public TelegramBot(TelegramClient telegramClient, Map<Long, UserDialog> userDialogs) {
+    public TelegramBot(TelegramClient telegramClient, CardStorage cardStorage, Map<Long, UserDialog> userDialogs) {
         this.telegramClient = telegramClient;
+        this.cardStorage = cardStorage;
         this.userDialogs = userDialogs;
     }
 
