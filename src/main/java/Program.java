@@ -10,7 +10,7 @@ public class Program {
         var launchTelegramBot = false;
         var launchCommandLineApp = false;
 
-        for (String arg : args) {
+        for (var arg : args) {
             switch (arg) {
                 case "--console":
                     launchCommandLineApp = true;
