@@ -7,11 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 
 public class InMemoryCardStorage implements CardStorage {
-    private final Map<UUID, List<Card>> storage = new HashMap<>();
+    private final Map<Long, List<Card>> storage = new HashMap<>();
     private final Random random;
 
     public InMemoryCardStorage(Random random) {
@@ -22,7 +21,7 @@ public class InMemoryCardStorage implements CardStorage {
         this(new Random());
     }
 
-    public Card getRandom(UUID userId) {
+    public Card getRandom(Long userId) {
         var cards = storage.getOrDefault(userId, new ArrayList<>());
         if (cards.isEmpty()) {
             return null;
@@ -33,13 +32,9 @@ public class InMemoryCardStorage implements CardStorage {
         return cards.get(index);
     }
 
-    public void add(UUID userId, Card card) {
+    public void add(Long userId, Card card) {
         var cards = storage.getOrDefault(userId, new ArrayList<>());
         cards.add(card);
         storage.put(userId, cards);
-    }
-
-    public void clear() {
-        storage.clear();
     }
 }

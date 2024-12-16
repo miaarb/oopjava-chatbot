@@ -8,11 +8,10 @@ import dialog.commands.ShowAnswerCommand;
 import dialog.commands.TextInputCommand;
 import dialog.commands.abstractions.Command;
 import dialog.user.User;
-import storage.InMemoryCardStorage;
+import storage.CardStorage;
 
 import java.util.Map;
 import java.util.Scanner;
-import java.util.UUID;
 
 
 public class CommandLineApp {
@@ -30,8 +29,8 @@ public class CommandLineApp {
         this.scanner = scanner;
     }
 
-    public CommandLineApp() {
-        this(new UserDialog(new User(UUID.randomUUID()), new InMemoryCardStorage()),
+    public CommandLineApp(CardStorage cardStorage) {
+        this(new UserDialog(new User(0L), cardStorage),
                 new Scanner(System.in));
     }
 

@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import storage.InMemoryCardStorage;
 
-import java.util.UUID;
+import java.util.Random;
 
 
 public class UserDialogTests {
 
     @Test
     public void userDialogShouldHandleAddCardScenario() {
-        var user = new User(UUID.randomUUID());
+        var user = new User(new Random().nextLong());
         var userDialog = new UserDialog(user, new InMemoryCardStorage());
 
         mustCreateCard(userDialog, "some question", "some answer");
@@ -25,7 +25,7 @@ public class UserDialogTests {
 
     @Test
     public void userShouldCanReadCardAndAnswer() {
-        var user = new User(UUID.randomUUID());
+        var user = new User(new Random().nextLong());
         var userDialog = new UserDialog(user, new InMemoryCardStorage());
         var question = "Вечный вопрос: сас или сос?";
         var answer = "42";
@@ -40,7 +40,7 @@ public class UserDialogTests {
 
     @Test
     public void handleCommandShouldHandleUnknownCommand() {
-        var user = new User(UUID.randomUUID());
+        var user = new User(new Random().nextLong());
         var userDialog = new UserDialog(user, new InMemoryCardStorage());
 
         var response = userDialog.handleCommand(new TextInputCommand("bad command"));
@@ -50,7 +50,7 @@ public class UserDialogTests {
 
     @Test
     public void handleCommandShouldHandleWrongCommand() {
-        var user = new User(UUID.randomUUID());
+        var user = new User(new Random().nextLong());
         var userDialog = new UserDialog(user, new InMemoryCardStorage());
         userDialog.handleCommand(new AddCardCommand());
 
@@ -62,12 +62,12 @@ public class UserDialogTests {
 
     @Test
     public void handleCommandShouldHandleHelpCommand() {
-        var user = new User(UUID.randomUUID());
+        var user = new User(new Random().nextLong());
         var userDialog = new UserDialog(user, new InMemoryCardStorage());
 
         var response = userDialog.handleCommand(new HelpCommand());
 
-        Assertions.assertTrue(response.message().contains("команды"));
+        Assertions.assertTrue(response.message().contains("Команды"));
         Assertions.assertTrue(response.message().contains("/add"));
         Assertions.assertTrue(response.message().contains("/help"));
         Assertions.assertTrue(response.message().contains("/read"));
