@@ -4,7 +4,7 @@ import dialog.commandexecutors.CommandExecutionResult;
 import dialog.commandexecutors.abstractions.CommandExecutor;
 import dialog.state.DialogState;
 import dialog.state.DialogStep;
-import dialog.state.ReadAnswerState;
+import dialog.state.ActiveCardDialogState;
 import storage.CardStorage;
 
 public class ReadCardExecutor implements CommandExecutor<DialogState> {
@@ -26,6 +26,7 @@ public class ReadCardExecutor implements CommandExecutor<DialogState> {
 
         return new CommandExecutionResult(
                 card.question(),
-                new ReadAnswerState(state.user, card.answer()));
+                new ActiveCardDialogState(state.user, card)
+                        .with(DialogStep.ANSWER_SHOW));
     }
 }

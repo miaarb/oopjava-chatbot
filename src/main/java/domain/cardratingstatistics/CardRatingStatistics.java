@@ -28,7 +28,7 @@ public class CardRatingStatistics {
     }
 
     public void addRating(CardRating rating) {
-        if (statistics.containsKey(rating)) {
+        if (!statistics.containsKey(rating)) {
             statistics.put(rating, 0);
         }
         statistics.put(rating, statistics.get(rating) + 1);

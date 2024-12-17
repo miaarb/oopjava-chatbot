@@ -6,7 +6,7 @@ import domain.cardratingstatistics.CardRatingStatistics;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryCardRatingStatisticsStorage {
+public class InMemoryCardRatingStatisticsStorage implements CardRatingStatisticsStorage {
     private final Map<Long, Map<Long, CardRatingStatistics>> storage = new HashMap<>();
 
     public Map<CardRating, Integer> getCardRatingStatics(Long userId, Long cardId) {

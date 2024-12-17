@@ -1,5 +1,6 @@
 import app.commandline.CommandLineApp;
 import app.telegrambot.TelegramBotApp;
+import storage.InMemoryCardRatingStatisticsStorage;
 import storage.InMemoryCardStorage;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Program {
         }
 
         var cardStorage = new InMemoryCardStorage();
+        var cardRatingStatisticsStorage = new InMemoryCardRatingStatisticsStorage();
         var runningApps = new ArrayList<Thread>();
 
         if (launchTelegramBot) {
@@ -32,12 +34,12 @@ public class Program {
                 System.out.println("Expected one argument: Bot-token for telegram");
                 return;
             }
-            var app = new TelegramBotApp(argsList.getFirst(), cardStorage);
+            var app = new TelegramBotApp(argsList.getFirst(), cardStorage, cardRatingStatisticsStorage);
             runningApps.add(new Thread(app::run));
         }
 
         if (launchCommandLineApp) {
-            var app = new CommandLineApp(cardStorage);
+            var app = new CommandLineApp(cardStorage, cardRatingStatisticsStorage);
             runningApps.add(new Thread(app::run));
         }
 

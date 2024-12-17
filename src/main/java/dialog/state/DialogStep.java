@@ -5,4 +5,5 @@ public enum DialogStep {
     QUESTION_INPUT,
     ANSWER_INPUT,
     ANSWER_SHOW,
+    RATE_CARD
 }

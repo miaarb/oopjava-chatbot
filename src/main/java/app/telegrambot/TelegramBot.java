@@ -13,6 +13,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
+import storage.CardRatingStatisticsStorage;
 import storage.CardStorage;
 
 import java.util.HashMap;
@@ -27,19 +28,27 @@ public class TelegramBot implements LongPollingSingleThreadUpdateConsumer {
             "/show", new ShowAnswerCommand()
     );
     private final CardStorage cardStorage;
+    private final CardRatingStatisticsStorage cardRatingStatisticsStorage;
 
     private final TelegramClient telegramClient;
     private final Map<Long, UserDialog> userDialogs;
 
-    public TelegramBot(TelegramClient telegramClient, CardStorage cardStorage) {
+    public TelegramBot(TelegramClient telegramClient, CardStorage cardStorage, CardRatingStatisticsStorage cardRatingStatisticsStorage) {
         this.telegramClient = telegramClient;
         this.cardStorage = cardStorage;
+        this.cardRatingStatisticsStorage = cardRatingStatisticsStorage;
         this.userDialogs = new HashMap<>();
     }
 
-    public TelegramBot(TelegramClient telegramClient, CardStorage cardStorage, Map<Long, UserDialog> userDialogs) {
+    public TelegramBot(
+            TelegramClient telegramClient,
+            CardStorage cardStorage,
+            CardRatingStatisticsStorage cardRatingStatisticsStorage,
+            Map<Long, UserDialog> userDialogs
+    ) {
         this.telegramClient = telegramClient;
         this.cardStorage = cardStorage;
+        this.cardRatingStatisticsStorage = cardRatingStatisticsStorage;
         this.userDialogs = userDialogs;
     }
 
@@ -50,7 +59,7 @@ public class TelegramBot implements LongPollingSingleThreadUpdateConsumer {
             var chatId = update.getMessage().getChatId();
 
             if (!userDialogs.containsKey(chatId)) {
-                userDialogs.put(chatId, new UserDialog(new User(chatId), cardStorage));
+                userDialogs.put(chatId, new UserDialog(new User(chatId), cardStorage, cardRatingStatisticsStorage));
             }
 
             var dialog = this.userDialogs.get(chatId);

@@ -2,18 +2,25 @@ package dialog.commandexecutors.readcard;
 
 import dialog.commandexecutors.CommandExecutionResult;
 import dialog.commandexecutors.abstractions.CommandExecutor;
-import dialog.state.DialogState;
 import dialog.state.DialogStep;
-import dialog.state.ReadAnswerState;
+import dialog.state.ActiveCardDialogState;
 
-public class ShowAnswerExecutor implements CommandExecutor<ReadAnswerState> {
+public class ShowAnswerExecutor implements CommandExecutor<ActiveCardDialogState> {
 
-    public CommandExecutionResult execute(ReadAnswerState state) {
-        var cardAnswer = state.answer;
+    public CommandExecutionResult execute(ActiveCardDialogState state) {
+        var cardAnswer = state.card.answer();
+        var rateMessage = """
+                Оцените, как хорошо вы знали ответ (введите цифру):
+                
+                AGAIN(-2),
+                HARD (-1),
+                GOOD(1),
+                EASY(2)
+                """;
 
         return new CommandExecutionResult(
-                cardAnswer,
-                new DialogState(state.user)
-                        .with(DialogStep.MENU));
+                cardAnswer + rateMessage,
+                new ActiveCardDialogState(state.user, state.card)
+                        .with(DialogStep.RATE_CARD));
     }
 }
