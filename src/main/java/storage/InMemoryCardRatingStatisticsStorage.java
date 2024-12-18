@@ -45,8 +45,9 @@ public class InMemoryCardRatingStatisticsStorage implements CardRatingStatistics
 
     public List<Long> getCardsWithWorstTotalRating(Long userId, int count) {
         var cardsStatistics = storage.getOrDefault(userId, new HashMap<>());
-        if (cardsStatistics.isEmpty())
+        if (cardsStatistics.isEmpty()) {
             return new ArrayList<>();
+        }
 
         return cardsStatistics.entrySet().stream()
                 .map(x -> Map.entry(x.getKey(), x.getValue().getTotalRating()))

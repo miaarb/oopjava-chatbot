@@ -34,7 +34,7 @@ public class RateCardCommandExecutor implements HandleTextCommandExecutor<Active
             default:
                 return new CommandExecutionResult(
                         "Введите корректное число от 0 до 3",
-                        new ActiveCardDialogState(state.user, DialogStep.RATE_CARD, state.handleInputCommand, state.card)
+                        state
                 );
         }
 

@@ -35,7 +35,10 @@ public class TelegramBot implements LongPollingSingleThreadUpdateConsumer {
     private final TelegramClient telegramClient;
     private final Map<Long, UserDialog> userDialogs;
 
-    public TelegramBot(TelegramClient telegramClient, CardStorage cardStorage, CardRatingStatisticsStorage cardRatingStatisticsStorage) {
+    public TelegramBot(
+            TelegramClient telegramClient,
+            CardStorage cardStorage,
+            CardRatingStatisticsStorage cardRatingStatisticsStorage) {
         this.telegramClient = telegramClient;
         this.cardStorage = cardStorage;
         this.cardRatingStatisticsStorage = cardRatingStatisticsStorage;
