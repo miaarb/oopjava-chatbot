@@ -14,7 +14,8 @@ public class HelpCommandExecutor implements CommandExecutor<DialogState> {
             /help -- справка
             /add -- добавить карточку вопрос-ответ
             /read -- получить случайную карточку
-            /show -- показать ответ""";
+            /show -- показать ответ
+            /stats -- посмотреть статистику ответов""";
 
     public CommandExecutionResult execute(DialogState state) {
         return new CommandExecutionResult(

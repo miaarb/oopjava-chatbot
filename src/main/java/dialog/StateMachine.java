@@ -3,20 +3,25 @@ package dialog;
 import dialog.commandexecutors.addcard.AddCardExecutor;
 import dialog.commandexecutors.addcard.AnswerInputCommandExecutor;
 import dialog.commandexecutors.addcard.QuestionInputCommandExecutor;
+import dialog.commandexecutors.readcard.RateCardCommandExecutor;
 import dialog.commandexecutors.readcard.ReadCardExecutor;
 import dialog.commandexecutors.readcard.ShowAnswerExecutor;
 import dialog.commandexecutors.showhelp.HelpCommandExecutor;
+import dialog.commandexecutors.statistics.StatisticsCommandExecutor;
 import dialog.commands.AddCardCommand;
 import dialog.commands.HelpCommand;
 import dialog.commands.ReadCardCommand;
 import dialog.commands.ShowAnswerCommand;
+import dialog.commands.StatisticsCommand;
 import dialog.commands.TextInputCommand;
 import dialog.commands.abstractions.Command;
 import dialog.internalcommands.handletextinput.AnswerInputCommand;
 import dialog.internalcommands.handletextinput.QuestionInputCommand;
+import dialog.internalcommands.handletextinput.RateCardCommand;
+import dialog.state.ActiveCardDialogState;
 import dialog.state.AddAnswerState;
 import dialog.state.DialogState;
-import dialog.state.ReadAnswerState;
+import storage.CardRatingStatisticsStorage;
 import storage.CardStorage;
 
 public class StateMachine {
@@ -26,10 +31,16 @@ public class StateMachine {
     private final HelpCommandExecutor helpCommandExecutor;
     private final ReadCardExecutor readCardExecutor;
     private final ShowAnswerExecutor showAnswerExecutor;
+    private final RateCardCommandExecutor rateCardExecutor;
+    private final StatisticsCommandExecutor statisticsCommandExecutor;
 
     private DialogState state;
 
-    public StateMachine(DialogState state, CardStorage cardStorage) {
+    public StateMachine(
+            DialogState state,
+            CardStorage cardStorage,
+            CardRatingStatisticsStorage cardRatingStatisticsStorage
+    ) {
         this.state = state;
         addCardExecutor = new AddCardExecutor();
         questionInputCommandExecutor = new QuestionInputCommandExecutor();
@@ -37,6 +48,8 @@ public class StateMachine {
         showAnswerExecutor = new ShowAnswerExecutor();
         answerInputCommandExecutor = new AnswerInputCommandExecutor(cardStorage);
         readCardExecutor = new ReadCardExecutor(cardStorage);
+        rateCardExecutor = new RateCardCommandExecutor(cardRatingStatisticsStorage);
+        statisticsCommandExecutor = new StatisticsCommandExecutor(cardRatingStatisticsStorage, cardStorage);
     }
 
     public DialogResponse handleCommand(Command command) {
@@ -67,9 +80,11 @@ public class StateMachine {
             case AddCardCommand _ -> addCardExecutor.execute(state);
             case HelpCommand _ -> helpCommandExecutor.execute(state);
             case ReadCardCommand _ -> readCardExecutor.execute(state);
-            case ShowAnswerCommand _ -> showAnswerExecutor.execute((ReadAnswerState) state);
+            case ShowAnswerCommand _ -> showAnswerExecutor.execute((ActiveCardDialogState) state);
             case AnswerInputCommand _ -> answerInputCommandExecutor.execute((AddAnswerState) state, text);
             case QuestionInputCommand _ -> questionInputCommandExecutor.execute(state, text);
+            case RateCardCommand _ -> rateCardExecutor.execute((ActiveCardDialogState) state, text);
+            case StatisticsCommand _ -> statisticsCommandExecutor.execute(state);
             default -> throw new IllegalArgumentException("Unexpected command:" + command);
         };
 

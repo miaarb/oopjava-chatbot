@@ -8,6 +8,8 @@ import dialog.state.DialogStep;
 import domain.card.Card;
 import storage.CardStorage;
 
+import java.util.Random;
+
 public class AnswerInputCommandExecutor implements HandleTextCommandExecutor<AddAnswerState> {
 
     private final CardStorage cardStorage;
@@ -18,7 +20,7 @@ public class AnswerInputCommandExecutor implements HandleTextCommandExecutor<Add
 
     public CommandExecutionResult execute(AddAnswerState state, String text) {
 
-        var card = new Card(state.question, text);
+        var card = new Card(Math.abs(new Random().nextLong()), state.question, text);
         cardStorage.add(state.user.id(), card);
 
         return new CommandExecutionResult(

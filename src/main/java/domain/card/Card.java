@@ -1,4 +1,4 @@
 package domain.card;
 
-public record Card(String question, String answer) {
+public record Card(Long id, String question, String answer) {
 }

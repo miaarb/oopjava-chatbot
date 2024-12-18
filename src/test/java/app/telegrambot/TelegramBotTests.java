@@ -7,6 +7,7 @@ import dialog.commands.AddCardCommand;
 import dialog.commands.HelpCommand;
 import dialog.commands.ReadCardCommand;
 import dialog.commands.ShowAnswerCommand;
+import dialog.commands.StatisticsCommand;
 import dialog.commands.TextInputCommand;
 import dialog.commands.abstractions.Command;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.message.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import storage.InMemoryCardRatingStatisticsStorage;
 import storage.InMemoryCardStorage;
 
 import java.util.Map;
@@ -34,6 +36,7 @@ class TelegramBotTests {
             "/help", new HelpCommand(),
             "/read", new ReadCardCommand(),
             "/show", new ShowAnswerCommand(),
+            "/stats", new StatisticsCommand(),
             "some text", new TextInputCommand("some text")
     );
 
@@ -56,7 +59,12 @@ class TelegramBotTests {
         var userDialog = mock(UserDialog.class);
         when(userDialog.handleCommand(Mockito.any())).thenReturn(new DialogResponse("success"));
 
-        var app = new TelegramBot(telegramClient, new InMemoryCardStorage(), Map.of(userId, userDialog));
+        var app = new TelegramBot(
+                telegramClient,
+                new InMemoryCardStorage(),
+                new InMemoryCardRatingStatisticsStorage(),
+                Map.of(userId, userDialog)
+        );
 
         COMMANDS_MAP.forEach((input, command) -> {
             when(update.getMessage().getText()).thenReturn(input);

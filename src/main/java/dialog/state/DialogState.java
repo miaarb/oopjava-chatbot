@@ -3,7 +3,7 @@ package dialog.state;
 import dialog.internalcommands.handletextinput.HandleTextCommand;
 import dialog.user.User;
 
-public sealed class DialogState permits AddAnswerState, ReadAnswerState {
+public sealed class DialogState permits AddAnswerState, ActiveCardDialogState {
     public final DialogStep currentStep;
     public final HandleTextCommand handleInputCommand;
     public final User user;

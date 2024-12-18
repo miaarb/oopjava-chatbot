@@ -5,9 +5,11 @@ import dialog.commands.AddCardCommand;
 import dialog.commands.HelpCommand;
 import dialog.commands.ReadCardCommand;
 import dialog.commands.ShowAnswerCommand;
+import dialog.commands.StatisticsCommand;
 import dialog.commands.TextInputCommand;
 import dialog.commands.abstractions.Command;
 import dialog.user.User;
+import storage.CardRatingStatisticsStorage;
 import storage.CardStorage;
 
 import java.util.Map;
@@ -19,7 +21,8 @@ public class CommandLineApp {
             "/add", new AddCardCommand(),
             "/help", new HelpCommand(),
             "/read", new ReadCardCommand(),
-            "/show", new ShowAnswerCommand()
+            "/show", new ShowAnswerCommand(),
+            "/stats", new StatisticsCommand()
     );
     private final UserDialog userDialog;
     private final Scanner scanner;
@@ -29,8 +32,8 @@ public class CommandLineApp {
         this.scanner = scanner;
     }
 
-    public CommandLineApp(CardStorage cardStorage) {
-        this(new UserDialog(new User(0L), cardStorage),
+    public CommandLineApp(CardStorage cardStorage, CardRatingStatisticsStorage cardRatingStatisticsStorage) {
+        this(new UserDialog(new User(0L), cardStorage, cardRatingStatisticsStorage),
                 new Scanner(System.in));
     }
 

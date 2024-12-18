@@ -1,5 +1,6 @@
 package app.telegrambot;
 
+import storage.InMemoryCardRatingStatisticsStorage;
 import storage.InMemoryCardStorage;
 
 
@@ -9,7 +10,7 @@ public class Program {
             System.out.println("Expected one argument: Bot-token for telegram");
             return;
         }
-        var app = new TelegramBotApp(args[0], new InMemoryCardStorage());
+        var app = new TelegramBotApp(args[0], new InMemoryCardStorage(), new InMemoryCardRatingStatisticsStorage());
         app.run();
     }
 }
