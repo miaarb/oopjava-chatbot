@@ -69,7 +69,8 @@ public class UserDialogTests {
         userDialog.handleCommand(new TextInputCommand("0"));
         var statsResponse = userDialog.handleCommand(new StatisticsCommand());
 
-        Assertions.assertTrue(statsResponse.message().contains("Заново:1") && statsResponse.message().contains(question));
+        Assertions.assertTrue(statsResponse.message().contains("Заново:1")
+                && statsResponse.message().contains(question));
     }
 
     @Test
