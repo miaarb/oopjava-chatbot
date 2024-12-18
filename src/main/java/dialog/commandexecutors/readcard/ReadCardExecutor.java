@@ -2,9 +2,9 @@ package dialog.commandexecutors.readcard;
 
 import dialog.commandexecutors.CommandExecutionResult;
 import dialog.commandexecutors.abstractions.CommandExecutor;
+import dialog.state.ActiveCardDialogState;
 import dialog.state.DialogState;
 import dialog.state.DialogStep;
-import dialog.state.ActiveCardDialogState;
 import storage.CardStorage;
 
 public class ReadCardExecutor implements CommandExecutor<DialogState> {
@@ -26,7 +26,6 @@ public class ReadCardExecutor implements CommandExecutor<DialogState> {
 
         return new CommandExecutionResult(
                 card.question(),
-                new ActiveCardDialogState(state.user, card)
-                        .with(DialogStep.ANSWER_SHOW));
+                new ActiveCardDialogState(state.user, DialogStep.ANSWER_SHOW, null, card));
     }
 }

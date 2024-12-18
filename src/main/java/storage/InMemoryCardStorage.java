@@ -21,6 +21,14 @@ public class InMemoryCardStorage implements CardStorage {
         this(new Random());
     }
 
+    public Card get(Long userId, Long cardId) {
+        var cards = storage.getOrDefault(userId, new ArrayList<>());
+        if (cards.isEmpty()) {
+            return null;
+        }
+        return cards.stream().filter(x -> x.id().equals(cardId)).findFirst().orElse(null);
+    }
+
     public Card getRandom(Long userId) {
         var cards = storage.getOrDefault(userId, new ArrayList<>());
         if (cards.isEmpty()) {

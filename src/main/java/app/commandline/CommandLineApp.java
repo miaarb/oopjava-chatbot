@@ -5,6 +5,7 @@ import dialog.commands.AddCardCommand;
 import dialog.commands.HelpCommand;
 import dialog.commands.ReadCardCommand;
 import dialog.commands.ShowAnswerCommand;
+import dialog.commands.StatisticsCommand;
 import dialog.commands.TextInputCommand;
 import dialog.commands.abstractions.Command;
 import dialog.user.User;
@@ -20,7 +21,8 @@ public class CommandLineApp {
             "/add", new AddCardCommand(),
             "/help", new HelpCommand(),
             "/read", new ReadCardCommand(),
-            "/show", new ShowAnswerCommand()
+            "/show", new ShowAnswerCommand(),
+            "/stats", new StatisticsCommand()
     );
     private final UserDialog userDialog;
     private final Scanner scanner;

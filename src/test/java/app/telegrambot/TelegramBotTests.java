@@ -7,6 +7,7 @@ import dialog.commands.AddCardCommand;
 import dialog.commands.HelpCommand;
 import dialog.commands.ReadCardCommand;
 import dialog.commands.ShowAnswerCommand;
+import dialog.commands.StatisticsCommand;
 import dialog.commands.TextInputCommand;
 import dialog.commands.abstractions.Command;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,7 @@ class TelegramBotTests {
             "/help", new HelpCommand(),
             "/read", new ReadCardCommand(),
             "/show", new ShowAnswerCommand(),
+            "/stats", new StatisticsCommand(),
             "some text", new TextInputCommand("some text")
     );
 

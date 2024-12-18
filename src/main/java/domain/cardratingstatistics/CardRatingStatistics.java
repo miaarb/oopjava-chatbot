@@ -21,7 +21,7 @@ public class CardRatingStatistics {
 
     public int getTotalRating() {
         var total = 0;
-        for(var entry: statistics.entrySet()) {
+        for (var entry : statistics.entrySet()) {
             total += entry.getKey().rate * entry.getValue();
         }
         return total;
